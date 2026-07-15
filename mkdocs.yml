@@ -1,0 +1,74 @@
+site_name: Igor Stureiko
+site_description: AI Architect, ML Platform Architect and Principal AI Engineer
+site_author: Igor Stureiko
+site_url: https://stureiko.github.io
+
+theme:
+  name: material
+
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.path
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - About: about.md
+  - Experience: experience.md
+  - Projects:
+      - Overview: projects/index.md
+      - Enterprise AI Platform: projects/enterprise-ai-platform.md
+      - Industrial AI Assistants: projects/ai-assistants.md
+      - Reinforcement Learning: projects/reinforcement-learning.md
+      - OCR Platform: projects/ocr-platform.md
+  - Architecture:
+      - Overview: architecture/index.md
+      - MLOps Platform: architecture/mlops-platform.md
+      - Zero Trust AI: architecture/zero-trust-ai.md
+      - AI Agents: architecture/ai-agents.md
+  - Teaching: teaching.md
+  - Articles: articles.md
+  - Resume: resume.md
+  - Contact: contact.md
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - footnotes
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - toc:
+      permalink: true
