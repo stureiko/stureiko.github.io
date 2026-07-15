@@ -79,6 +79,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#reinforcement-learning" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -647,6 +652,26 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement Learning
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -664,6 +689,58 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ml-trading-systems-confidential-nda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ML trading systems — Confidential (NDA)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trading-bot-strategy-models-in-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trading bot — strategy models in production
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#teaching-rl-otus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Teaching RL — OTUS
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1001,6 +1078,49 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ml-trading-systems-confidential-nda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ML trading systems — Confidential (NDA)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trading-bot-strategy-models-in-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trading bot — strategy models in production
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#teaching-rl-otus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Teaching RL — OTUS
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1065,9 +1185,41 @@
 
 
 
-  <h1>Reinforcement Learning</h1>
-
-
+<h1 id="reinforcement-learning">Reinforcement Learning<a class="headerlink" href="#reinforcement-learning" title="Permanent link">&para;</a></h1>
+<p><code>2022 — present · quantitative finance &amp; education</code></p>
+<p>RL is a through-line of my recent work: decision systems for trading,
+offline policy evaluation, and teaching the discipline end-to-end.</p>
+<h2 id="ml-trading-systems-confidential-nda">ML trading systems — Confidential (NDA)<a class="headerlink" href="#ml-trading-systems-confidential-nda" title="Permanent link">&para;</a></h2>
+<p><code>2022 — 2024 · Team Lead</code></p>
+<ul>
+<li>Led a team building recommendation systems for algorithmic trading.</li>
+<li>Developed ML models for trading strategies; instrument selection driven
+  by risk/return profiles.</li>
+<li>Backtesting and offline evaluation before capital exposure; A/B testing
+  of strategies in production.</li>
+<li>Production rollout with live performance monitoring.</li>
+</ul>
+<p><strong>Stack:</strong> <code>Python</code> · <code>Time series</code> · <code>RL</code> · <code>A/B testing</code> · <code>MLFlow</code> ·
+<code>ClickHouse</code></p>
+<h2 id="trading-bot-strategy-models-in-production">Trading bot — strategy models in production<a class="headerlink" href="#trading-bot-strategy-models-in-production" title="Permanent link">&para;</a></h2>
+<p><code>2023 · ML Team Lead</code></p>
+<ul>
+<li>Development of RL/ML models for trading strategies.</li>
+<li>Model testing, preparation for deployment, rollout to production and
+  performance monitoring.</li>
+</ul>
+<h2 id="teaching-rl-otus">Teaching RL — OTUS<a class="headerlink" href="#teaching-rl-otus" title="Permanent link">&para;</a></h2>
+<p><code>2023 — present · Course Director</code></p>
+<p>Directing the <strong>Reinforcement Learning</strong> course track: from Markov decision
+processes and value-based methods to policy gradients and production
+deployment of RL agents. See <a href="../../teaching/">Teaching</a>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Why offline evaluation matters</p>
+<p>In trading — as in industrial control — you cannot A/B-test your way
+out of a bad policy without paying for it. Offline policy evaluation
+and careful simulation are what make RL deployable in high-stakes
+environments.</p>
+</div>
 
 
 

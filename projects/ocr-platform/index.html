@@ -79,6 +79,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#ocr-platform-for-technical-documents" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -675,6 +680,26 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OCR Platform
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -692,6 +717,69 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Challenge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#my-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        My role
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-highlights" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture highlights
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1001,6 +1089,60 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Challenge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#my-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        My role
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-highlights" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture highlights
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1065,9 +1207,29 @@
 
 
 
-  <h1>OCR Platform</h1>
-
-
+<h1 id="ocr-platform-for-technical-documents">OCR Platform for Technical Documents<a class="headerlink" href="#ocr-platform-for-technical-documents" title="Permanent link">&para;</a></h1>
+<p><code>2024 · DM-Solutions · ML Team Lead</code></p>
+<h2 id="challenge">Challenge<a class="headerlink" href="#challenge" title="Permanent link">&para;</a></h2>
+<p>Automated recognition of technical text in engineering documentation —
+domain-specific notation, tables and drawings that general-purpose OCR
+handles poorly.</p>
+<h2 id="my-role">My role<a class="headerlink" href="#my-role" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Led development and automation of ML pipelines for technical text
+  recognition.</li>
+<li>Built pipelines for model quality assurance — recognition quality is
+  measured continuously, not assumed.</li>
+<li>Model testing and preparation for production deployment.</li>
+</ul>
+<h2 id="architecture-highlights">Architecture highlights<a class="headerlink" href="#architecture-highlights" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Automated end-to-end pipeline: ingestion → preprocessing → recognition →
+  quality scoring.</li>
+<li>QA pipeline as a first-class component: every model version is validated
+  against a reference corpus before promotion.</li>
+</ul>
+<h2 id="stack">Stack<a class="headerlink" href="#stack" title="Permanent link">&para;</a></h2>
+<p><code>PyTorch</code> · <code>Transformers</code> · <code>OCR</code> · <code>Apache Airflow</code> · <code>Docker</code> · <code>MLFlow</code></p>
 
 
 

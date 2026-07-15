@@ -79,6 +79,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#enterprise-ai-platform-atommind-20" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -591,6 +596,26 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enterprise AI Platform
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -608,6 +633,69 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Challenge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#my-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        My role
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-highlights" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture highlights
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1001,6 +1089,60 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#challenge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Challenge
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#my-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        My role
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#architecture-highlights" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Architecture highlights
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1065,9 +1207,37 @@
 
 
 
-  <h1>Enterprise AI Platform</h1>
-
-
+<h1 id="enterprise-ai-platform-atommind-20">Enterprise AI Platform — AtomMind 2.0<a class="headerlink" href="#enterprise-ai-platform-atommind-20" title="Permanent link">&para;</a></h1>
+<p><code>2024 · TVEL Rosatom JSC · AI Architect</code></p>
+<h2 id="challenge">Challenge<a class="headerlink" href="#challenge" title="Permanent link">&para;</a></h2>
+<p>The nuclear-fuel manufacturer needed a unified platform to manage the full
+life cycle of ML solutions — from model creation to production operation —
+usable by production engineers, not only data scientists, and operating in
+a regulated, security-constrained environment.</p>
+<h2 id="my-role">My role<a class="headerlink" href="#my-role" title="Permanent link">&para;</a></h2>
+<p>End-to-end technical architecture:</p>
+<ul>
+<li>Requirements for the ML life-cycle management system.</li>
+<li>Platform technical architecture and implementation options.</li>
+<li>Design of the MLOps stack.</li>
+<li>Integration of the MLOps subsystem into the overall AtomMind 2.0
+  platform.</li>
+<li>Technical implementation design of the MLOps subsystem.</li>
+</ul>
+<h2 id="architecture-highlights">Architecture highlights<a class="headerlink" href="#architecture-highlights" title="Permanent link">&para;</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Two-level AI-assistant design</p>
+<p>One assistant tier for production engineers on the shop floor, another
+for model creation and management — different UX, shared platform core.</p>
+</div>
+<ul>
+<li>MLOps subsystem covering training, validation, deployment and monitoring.</li>
+<li>Designed for national security-compliance requirements (FSTEC) —
+  air-gapped operation, controlled dependencies, auditable pipelines.</li>
+</ul>
+<h2 id="stack">Stack<a class="headerlink" href="#stack" title="Permanent link">&para;</a></h2>
+<p><code>Kubernetes</code> · <code>KubeFlow</code> · <code>KServe</code> · <code>MLFlow</code> · <code>Apache Airflow</code> ·
+<code>LangChain</code> · <code>LangGraph</code></p>
 
 
 
