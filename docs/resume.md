@@ -2,7 +2,7 @@
 
 ## Igor Stureiko
 
-AI Architect · ML Platform Architect · Principal AI Engineer
+AI Architect · ML Platform Architect · Principal AI Engineer · ML team lead
 
 [Download résumé as PDF](assets/documents/Igor_Stureiko_AI_Architect.pdf){ .md-button .md-button--primary }
 
@@ -10,3 +10,4 @@ AI Architect · ML Platform Architect · Principal AI Engineer
 
 More than 20 years of experience in software engineering,
 applied mathematics, machine learning and AI architecture.
+
