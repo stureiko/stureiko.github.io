@@ -83,7 +83,7 @@ I believe successful AI systems are built not only on strong models, but on robu
     Automated recognition of technical text in engineering documentation — 
     domain-specific notation, tables and drawings that general-purpose OCR handles poorly.
 
-    [:octicons-arrow-right-24: Case study](projects/ocr-pltform.md)
+    [:octicons-arrow-right-24: Case study](projects/ocr-platform.md)
 
 </div>
 
