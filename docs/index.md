@@ -2,16 +2,18 @@
 
 ## AI Architect · ML Platform Architect · Principal AI Engineer · ML team lead
 
-I design and build production AI platforms, MLOps systems,
-AI agent applications and machine learning solutions for
-industrial and enterprise environments.
+I am an AI Architect with more than 20 years of experience designing and delivering software systems, 
+machine learning platforms, and AI solutions for enterprise and industrial environments. 
+My work spans the full lifecycle of AI systems—from architecture and platform design to production deployment, 
+governance, and operational excellence. 
+I specialize in building scalable AI platforms, MLOps ecosystems, AI agent solutions, and decision-support systems 
+that solve complex real-world engineering challenges.
 
-20+ years in software and applied mathematics
-20+ specialists in multidisciplinary teams
-Enterprise and regulated industrial environments
-AI, MLOps and decision systems from design to production
-PhD in Theoretical Physics
-Course Director across four technical programmes
+My background combines a PhD in Theoretical Physics with two decades of experience in applied mathematics, 
+software engineering, machine learning, and technical leadership. 
+This combination allows me to approach AI architecture from first principles, balancing business objectives, 
+engineering constraints, security requirements, and long-term maintainability. 
+I believe successful AI systems are built not only on strong models, but on robust architecture, reliable infrastructure, and well-designed engineering processes.
 
 [View projects](projects/index.md){ .md-button .md-button--primary }
 [Architecture](architecture/index.md){ .md-button }
