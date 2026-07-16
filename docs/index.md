@@ -74,6 +74,15 @@ Course Director across four technical programmes
 
     [:octicons-arrow-right-24: Case study](projects/reinforcement-learning.md)
 
+-   :material-chart-timeline-variant:{ .lg .middle } **[OCR Platform for Technical Documents](projects/ocr-platform.md)**
+
+    ---
+
+    Automated recognition of technical text in engineering documentation — 
+    domain-specific notation, tables and drawings that general-purpose OCR handles poorly.
+
+    [:octicons-arrow-right-24: Case study](projects/ocr-pltform.md)
+
 </div>
 
 ---
