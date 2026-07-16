@@ -76,7 +76,7 @@ I believe successful AI systems are built not only on strong models, but on robu
 
     [:octicons-arrow-right-24: Case study](projects/reinforcement-learning.md)
 
--   :material-chart-timeline-variant:{ .lg .middle } **[OCR Platform for Technical Documents](projects/ocr-platform.md)**
+-   :material-text-recognition:{ .lg .middle } **[OCR Platform for Technical Documents](projects/ocr-platform.md)**
 
     ---
 
