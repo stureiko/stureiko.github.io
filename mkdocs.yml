@@ -44,11 +44,20 @@ nav:
       - OCR Platform: projects/ocr-platform.md
   - Architecture:
       - Overview: architecture/index.md
-      - MLOps Platform: architecture/mlops-platform.md
+      # - AI Platform Architecture: architecture/ai_platform_architecture.md
       - Zero Trust AI: architecture/zero-trust-ai.md
-      - AI Agents: architecture/ai-agents.md
+      # - MLOps Platform:
+      # - AI Agents:
+      # - LLM Integration:
+      # - Event-Driven Architecture:
+      # - AI Observability:
+      # - AI Governance:
+      # - AI Security:
+      # - Reference Patterns:
   - Teaching: teaching.md
-  - Articles: articles.md
+  - Articles:
+      - Overview: articles.md
+      - The Three Fundamental Questions: articles/Tree_questions/three_questions_eng.md
   - Resume: resume.md
   - Contact: contact.md
 

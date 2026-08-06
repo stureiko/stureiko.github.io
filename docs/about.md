@@ -28,7 +28,7 @@ national-infrastructure scale.
 ## Beyond engineering
 
 - Course Director at OTUS for Machine Learning, MLOps, Reinforcement
-  Learning and Quantitative Finance tracks.
+  Learning and Quantitative Finance tracks, System design and Architecture.
 - Studied physics at Philipps-Universität Marburg, Germany.
 - Experience evaluating the economic side of engineering: risk assessment,
   feasibility studies, investment effectiveness.
