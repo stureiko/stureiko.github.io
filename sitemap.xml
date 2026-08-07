@@ -1,75 +1,241 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <url>
-         <loc>https://stureiko.github.io/</loc>
-         <lastmod>2026-08-07</lastmod>
+        <loc>https://stureiko.github.io/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/"/>
     </url>
     <url>
-         <loc>https://stureiko.github.io/about/</loc>
-         <lastmod>2026-08-07</lastmod>
+        <loc>https://stureiko.github.io/about/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/about/"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/about/"/>
     </url>
     <url>
-         <loc>https://stureiko.github.io/articles/</loc>
-         <lastmod>2026-08-07</lastmod>
+        <loc>https://stureiko.github.io/articles/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/articles/"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/articles/"/>
     </url>
     <url>
-         <loc>https://stureiko.github.io/contact/</loc>
-         <lastmod>2026-08-07</lastmod>
+        <loc>https://stureiko.github.io/contact/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/contact/"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/contact/"/>
     </url>
     <url>
-         <loc>https://stureiko.github.io/experience/</loc>
-         <lastmod>2026-08-07</lastmod>
+        <loc>https://stureiko.github.io/experience/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/experience/"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/experience/"/>
     </url>
     <url>
-         <loc>https://stureiko.github.io/resume/</loc>
-         <lastmod>2026-08-07</lastmod>
+        <loc>https://stureiko.github.io/resume/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/resume/"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/resume/"/>
     </url>
     <url>
-         <loc>https://stureiko.github.io/teaching/</loc>
-         <lastmod>2026-08-07</lastmod>
+        <loc>https://stureiko.github.io/teaching/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/teaching/"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/teaching/"/>
     </url>
     <url>
-         <loc>https://stureiko.github.io/architecture/</loc>
-         <lastmod>2026-08-07</lastmod>
+        <loc>https://stureiko.github.io/architecture/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/architecture/"/>
     </url>
     <url>
-         <loc>https://stureiko.github.io/architecture/ai-agents/</loc>
-         <lastmod>2026-08-07</lastmod>
+        <loc>https://stureiko.github.io/architecture/ai-agents/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/architecture/ai-agents/"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/architecture/ai-agents/"/>
     </url>
     <url>
-         <loc>https://stureiko.github.io/architecture/mlops-platform/</loc>
-         <lastmod>2026-08-07</lastmod>
+        <loc>https://stureiko.github.io/architecture/mlops-platform/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/architecture/mlops-platform/"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/architecture/mlops-platform/"/>
     </url>
     <url>
-         <loc>https://stureiko.github.io/architecture/zero-trust-ai/</loc>
-         <lastmod>2026-08-07</lastmod>
+        <loc>https://stureiko.github.io/architecture/zero-trust-ai/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/architecture/zero-trust-ai/"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/architecture/zero-trust-ai/"/>
     </url>
     <url>
-         <loc>https://stureiko.github.io/articles/Tree_questions/three_questions_eng/</loc>
-         <lastmod>2026-08-07</lastmod>
+        <loc>https://stureiko.github.io/articles/Tree_questions/three_questions/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/articles/Tree_questions/three_questions/"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/articles/Tree_questions/three_questions/"/>
     </url>
     <url>
-         <loc>https://stureiko.github.io/articles/Tree_questions/three_questions_rus/</loc>
-         <lastmod>2026-08-07</lastmod>
+        <loc>https://stureiko.github.io/projects/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/projects/"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/projects/"/>
     </url>
     <url>
-         <loc>https://stureiko.github.io/projects/</loc>
-         <lastmod>2026-08-07</lastmod>
+        <loc>https://stureiko.github.io/projects/ai-assistants/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/projects/ai-assistants/"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/projects/ai-assistants/"/>
     </url>
     <url>
-         <loc>https://stureiko.github.io/projects/ai-assistants/</loc>
-         <lastmod>2026-08-07</lastmod>
+        <loc>https://stureiko.github.io/projects/enterprise-ai-platform/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/projects/enterprise-ai-platform/"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/projects/enterprise-ai-platform/"/>
     </url>
     <url>
-         <loc>https://stureiko.github.io/projects/enterprise-ai-platform/</loc>
-         <lastmod>2026-08-07</lastmod>
+        <loc>https://stureiko.github.io/projects/ocr-platform/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/projects/ocr-platform/"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/projects/ocr-platform/"/>
     </url>
     <url>
-         <loc>https://stureiko.github.io/projects/ocr-platform/</loc>
-         <lastmod>2026-08-07</lastmod>
+        <loc>https://stureiko.github.io/projects/reinforcement-learning/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/projects/reinforcement-learning/"/>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/projects/reinforcement-learning/"/>
     </url>
     <url>
-         <loc>https://stureiko.github.io/projects/reinforcement-learning/</loc>
-         <lastmod>2026-08-07</lastmod>
+        <loc>https://stureiko.github.io/ru/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/"/>
+    </url>
+    <url>
+        <loc>https://stureiko.github.io/ru/about/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/about/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/about/"/>
+    </url>
+    <url>
+        <loc>https://stureiko.github.io/ru/articles/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/articles/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/articles/"/>
+    </url>
+    <url>
+        <loc>https://stureiko.github.io/ru/contact/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/contact/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/contact/"/>
+    </url>
+    <url>
+        <loc>https://stureiko.github.io/ru/experience/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/experience/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/experience/"/>
+    </url>
+    <url>
+        <loc>https://stureiko.github.io/ru/resume/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/resume/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/resume/"/>
+    </url>
+    <url>
+        <loc>https://stureiko.github.io/ru/teaching/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/teaching/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/teaching/"/>
+    </url>
+    <url>
+        <loc>https://stureiko.github.io/ru/architecture/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/architecture/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/architecture/"/>
+    </url>
+    <url>
+        <loc>https://stureiko.github.io/ru/architecture/ai-agents/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/architecture/ai-agents/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/architecture/ai-agents/"/>
+    </url>
+    <url>
+        <loc>https://stureiko.github.io/ru/architecture/mlops-platform/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/architecture/mlops-platform/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/architecture/mlops-platform/"/>
+    </url>
+    <url>
+        <loc>https://stureiko.github.io/ru/architecture/zero-trust-ai/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/architecture/zero-trust-ai/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/architecture/zero-trust-ai/"/>
+    </url>
+    <url>
+        <loc>https://stureiko.github.io/ru/articles/Tree_questions/three_questions/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/articles/Tree_questions/three_questions/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/articles/Tree_questions/three_questions/"/>
+    </url>
+    <url>
+        <loc>https://stureiko.github.io/ru/projects/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/projects/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/projects/"/>
+    </url>
+    <url>
+        <loc>https://stureiko.github.io/ru/projects/ai-assistants/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/projects/ai-assistants/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/projects/ai-assistants/"/>
+    </url>
+    <url>
+        <loc>https://stureiko.github.io/ru/projects/enterprise-ai-platform/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/projects/enterprise-ai-platform/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/projects/enterprise-ai-platform/"/>
+    </url>
+    <url>
+        <loc>https://stureiko.github.io/ru/projects/ocr-platform/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/projects/ocr-platform/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/projects/ocr-platform/"/>
+    </url>
+    <url>
+        <loc>https://stureiko.github.io/ru/projects/reinforcement-learning/</loc>
+        <lastmod>2026-08-07</lastmod>
+        <changefreq>daily</changefreq>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://stureiko.github.io/ru/projects/reinforcement-learning/"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://stureiko.github.io/projects/reinforcement-learning/"/>
     </url>
 </urlset>
