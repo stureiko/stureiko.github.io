@@ -11,6 +11,8 @@ IT-education platforms in Eastern Europe (`2023 — present`).
 | **MLOps** | Production deployment of ML models — the full life cycle |
 | **Machine Learning: Basic & Professional** | Core ML through advanced practice |
 | **Quantitative Finance** | Quant analysis, algorithmic trading |
+| **AI Agents advanced** | Build AI agents from scratch using modern frameworks |
+| **Architecture** | Architecture of the complex multicomponents systems |
 
 ## Lecture topics
 
