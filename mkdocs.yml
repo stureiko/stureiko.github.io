@@ -58,6 +58,7 @@ nav:
   - Articles:
       - Overview: articles.md
       - The Three Fundamental Questions: articles/Tree_questions/three_questions.md
+      - From Notebook to Production ML: articles/From_model_to_system/ml_system_design.md
   - Resume: resume.md
   - Contact: contact.md
 
@@ -88,6 +89,7 @@ plugins:
             Resume: Резюме
             Contact: Контакты
             The Three Fundamental Questions: Три главных вопроса
+            From Notebook to Production ML: От ноутбука к промышленной ML-системе
 
 markdown_extensions:
   - admonition
