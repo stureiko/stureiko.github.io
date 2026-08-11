@@ -1,0 +1,1685 @@
+
+<!doctype html>
+<html lang="ru" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI Architect, ML Platform Architect and Principal AI Engineer">
+      
+      
+        <meta name="author" content="Igor Stureiko">
+      
+      
+        <link rel="canonical" href="https://stureiko.github.io/ru/articles/From_model_to_system/ml_system_design/">
+      
+      
+        <link rel="prev" href="../../Tree_questions/three_questions/">
+      
+      
+        <link rel="next" href="../../../resume/">
+      
+      
+        
+          <link rel="alternate" href="../../../../articles/From_model_to_system/ml_system_design/" hreflang="en">
+        
+          <link rel="alternate" href="./" hreflang="ru">
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>От ноутбука к промышленной ML-системе - Igor Stureiko</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#jupyter-notebook-ml-" class="md-skip">
+          Перейти к содержанию
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Верхний колонтитул">
+    <a href="../../../" title="Igor Stureiko" class="md-header__button md-logo" aria-label="Igor Stureiko" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Igor Stureiko
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              От ноутбука к промышленной ML-системе
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Выберите язык">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../../articles/From_model_to_system/ml_system_design/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Поиск" placeholder="Поиск" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Поиск">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистить" aria-label="Очистить" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Инициализация поиска
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Главная
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Обо мне
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../experience/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Опыт
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../projects/" class="md-tabs__link">
+          
+  
+  
+  Проекты
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../architecture/" class="md-tabs__link">
+          
+  
+  
+  Архитектура
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../teaching/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Преподавание
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  Статьи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../resume/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Резюме
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../contact/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Контакты
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навигация" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../" title="Igor Stureiko" class="md-nav__button md-logo" aria-label="Igor Stureiko" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Igor Stureiko
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Главная
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Обо мне
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../experience/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Опыт
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Проекты
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Проекты
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Обзор
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/enterprise-ai-platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enterprise AI Platform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/ai-assistants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Industrial AI Assistants
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/reinforcement-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/ocr-platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OCR Platform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Архитектура
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Архитектура
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Обзор
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/zero-trust-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero Trust AI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../teaching/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Преподавание
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Статьи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Статьи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Обзор
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Tree_questions/three_questions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Три главных вопроса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    От ноутбука к промышленной ML-системе
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    От ноутбука к промышленной ML-системе
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Содержание">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Содержание
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Введение
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-jupyter-notebook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Этап 1. Jupyter Notebook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Этап 2. Первый сервис инференса
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Этап 3. Автоматизация обучения
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Этап 4. Данные становятся системой
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Этап 5. Появляется Production
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Этап 6. Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-continuous-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Этап 7. Continuous Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-enterprise-ml-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Этап 8. Enterprise ML Platform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-ai-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Этап 9. AI Platform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Заключение
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Источники
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../resume/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Резюме
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Контакты
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Содержание">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Содержание
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Введение
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-jupyter-notebook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Этап 1. Jupyter Notebook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Этап 2. Первый сервис инференса
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Этап 3. Автоматизация обучения
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Этап 4. Данные становятся системой
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-production" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Этап 5. Появляется Production
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Этап 6. Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-continuous-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Этап 7. Continuous Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-enterprise-ml-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Этап 8. Enterprise ML Platform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-ai-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Этап 9. AI Platform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Заключение
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Источники
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Навигация" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../../../" class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Главная
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Статьи
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="jupyter-notebook-ml-">От Jupyter Notebook к промышленной ML-системе<a class="headerlink" href="#jupyter-notebook-ml-" title="Permanent link">&para;</a></h1>
+<p><em>Почему 90% моделей никогда не становятся промышленными решениями</em></p>
+<h2 id="_1">Введение<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>История большинства ML-проектов удивительно однообразна. В отделе data science появляется Jupyter Notebook. На тестовой выборке модель показывает accuracy 98%, руководство впечатлено, проект признают успешным. Проходит несколько месяцев — и выясняется, что модель так и не вышла за пределы ноутбука: она не используется бизнесом, не приносит выручки и постепенно забывается вместе с виртуальным окружением, в котором обучалась, при этом на ее создание было потрачено несколько месяцев человекочасов. В итоге остаются только спианные затраты бизнеса. Проблема не в том, что. модель была плоха - она подтвердила свою состоятельность метриками, но стоимость ее вывода в производственый контур оказалась слошком высока.</p>
+<p>По давно сложившемуся опыту индустрии, до промышленной эксплуатации доходит лишь небольшая часть моделей, разработанных в исследовательском режиме - эта цифра настолько часто повторяется в профессиональном сообществе, что стала почти афоризмом. Причина не в качестве моделей и не в компетенции дата-сайентистов, причина в том, что модель это всего лишь одна маленькая деталь гораздо более сложной системы. Классическая работа исследователей Google «Hidden Technical Debt in Machine Learning Systems» показала это нагляднее всего: код самой модели занимает лишь небольшую часть общей архитектуры, а вокруг него множество инфраструктурных компонентов: data verification, feature extraction, serving infrastructure, monitoring и десятки других компонентов, каждый из которых накапливает собственный технический долг [6].</p>
+<p>Настоящая ML-система — это не модель, а десятки сервисов и архитектурных решений и огромное количество инженерных решений. Путь от первого эксперимента до промышленной AI-платформы редко бывает прямым, но почти всегда проходит через одни и те же этапы взросления. В этой статье мы пройдем этот путь глазами архитектора — от Jupyter Notebook до платформы, объединяющей классическое машинное обучение, LLM и AI-агентов.</p>
+<p>Девять этапов, описанных далее, это не строгая методология и не стандарт, а обобщение повторяющегося паттерна, который встречается в компаниях самого разного масштаба, от стартапа с одной моделью до корпорации с десятками команд. Кто-то проходит эти этапы за несколько месяцев, кто-то растягивает переход на годы, а кто-то объединяет соседние этапы в один спринт. Но порядок, в котором возникают архитектурные вопросы, на удивление стабилен: сначала нужно доказать, что модель вообще работает, и лишь затем — что она способна работать надёжно, воспроизводимо и в масштабе. Попытка поменять этот порядок местами — спроектировать enterprise-платформу до того, как появилась хотя бы одна работающая модель, — это классическая ошибка избыточного проектирования, которая отнимает время и создаёт архитектуру для задачи, чьи реальные требования ещё не известны.</p>
+<h2 id="1-jupyter-notebook">Этап 1. Jupyter Notebook<a class="headerlink" href="#1-jupyter-notebook" title="Permanent link">&para;</a></h2>
+<p>На старте существует немногое: ноутбук, набор данных и обученная модель. Формально всё работает — можно запустить ячейки сверху вниз и получить прогноз.</p>
+<p>CSV -&gt; Pandas -&gt; Notebook -&gt; Model</p>
+<p>Это стадия чистого исследования, и её ценность не стоит недооценивать: именно здесь проверяется базовая гипотеза — способна ли модель вообще решить поставленную задачу.</p>
+<p>На этом этапе архитектора как такового ещё нет. Есть исследователь, чья главная задача — доказать, что идея вообще работает и подтверждается на реальных данных. Любая попытка спроектировать архитектуру до появления первой рабочей модели — это трата ресурсов на несуществующую проблему. Путь от python-кода в ноутбуке до production-grade ML-систем начинается именно с признания того, что на этой стадии нужна не архитектура, а дисциплина эксперимента [2].</p>
+<p>Наиболее частая ошибка — игнорирование воспроизводимости экспериментов. Через неделю активной работы уже невозможно восстановить, какая версия данных использовалась, какие гиперпараметры дали лучший результат и почему одна модель была выбрана вместо другой. Здесь закладывается первый слой того самого скрытого технического долга, о котором пишут Sculley и соавторы: путаница между кодом, данными и конфигурацией возникает не в продакшене, а именно в момент бесконтрольного экспериментирования [6].</p>
+<p>Здесь же стоит развеять распространённое заблуждение: воспроизводимость на стадии ноутбука — это не про Docker и не про пайплайны, а про элементарную дисциплину. Зафиксировать seed, сохранить версию датасета, записать использованные гиперпараметры и метрики каждого прогона — этого достаточно, чтобы через месяц не пришлось восстанавливать логику эксперимента по памяти. Отсутствие этой дисциплины не критично, пока модель живёт в одной голове одного исследователя, но становится дорогим уже на следующем этапе, когда к процессу подключаются другие люди.</p>
+<p>Одним из распространенных решений на этом этапе является внедрение систем контроля ML экспериментов, будь то MLFlow, Weight&amp;Bias, DVC или иная система, такое решение показывает зрелость исследвоателя и его желание поддерживать эксперимент на должном уровне. Такие системы позволяют вести учет гиперпараметров, наборов данных, метрик моделей, хранить и получать лучшу модель по выбранной метрике. Их использование даже для одного инженера может оказаться крайне полезной практикой и они безусловно необходимы когда над моделью начинает работать более одного человека.</p>
+<p>Ноутбук умеет обучать модель, но бизнес хочет получать прогнозы автоматически, а не по запросу дата-сайентиста. В этот момент появляется первая по-настоящему архитектурная задача — как отдать результат модели наружу.</p>
+<h2 id="2">Этап 2. Первый сервис инференса<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>Модель перестаёт быть артефактом исследования и становится частью продукта — она должна отвечать на запросы в реальном времени.</p>
+<p>Notebook -&gt; Saved Model -&gt; REST API -&gt; Application</p>
+<p>Появляется первый по-настоящему архитектурный контур решений: как сериализовать модель, где её хранить, как загружать при старте сервиса, как обновлять без простоя и как масштабировать под нагрузку. Типичный стек этого этапа — FastAPI для обслуживания запросов, MLflow для трекинга и хранения версий модели, Docker для упаковки окружения. Практический опыт построения полностью автоматизированного CI/CD-конвейера на связке MLflow, GitHub Actions, FastAPI и Docker хорошо иллюстрирует, из каких элементов складывается даже минимальная production-обвязка вокруг модели [1]. Важно и то, что изменение модели — это лишь одна из трёх осей изменений в ML-системе наряду с кодом и данными; методология CD4ML прямо указывает, что версионировать и воспроизводимо разворачивать нужно все три оси одновременно [8].</p>
+<p>Самая распространённая проблема этого этапа — модель, которая загружается заново на каждый запрос, что убивает производительность сервиса. Следом идут отсутствие контроля версий модели, отсутствие валидации схемы входных данных и, как следствие, API, который ломается после первого же обновления модели, потому что никто не предупредил потребителей об изменении контракта.</p>
+<p>Отдельного внимания заслуживает вопрос контракта данных. На входе сервиса появляется реальный, часто неаккуратный трафик от внешних систем, а не аккуратно подготовленный тестовый датасет. Без явной схемы входных данных модель рано или поздно получит запрос, для которого не была обучена, и либо вернёт бессмысленный прогноз, либо упадёт с необработанным исключением. Уже на этом этапе имеет смысл заложить базовую валидацию входа как отдельный слой перед вызовом модели, а не как часть кода самой модели.</p>
+<p>Обычно на этом этапе происходит переход от модели в Jupyter notebook к коду в виде отдельных классов. Расходится предобработчик данных, код обучения и инференса самой модели, валидация входных и выходных данных, обработка ошибок. Код перестает быть исследовательским ноутбуком в котором последовательность запуска ячеек влияет на результат и преобретает черты законченного проекта готового к автоматзации.</p>
+<p>Вводится обработка запросов и ответов пользователя, формируется первый контракт данных.</p>
+<p>Модель работает и отвечает на запросы. Но встаёт следующий вопрос: как её переобучать, когда появляются новые данные?</p>
+<h2 id="3">Этап 3. Автоматизация обучения<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>На смену ручному запуску обучения приходит pipeline — воспроизводимая последовательность шагов от сырых данных до зарегистрированной модели.</p>
+<p>Data -&gt; Validation -&gt; Training -&gt; Evaluation -&gt; Registry</p>
+<p>На этом этапе ма перестаём думать о модели как о единичном артефакте и начинаем проектировать процесс. Здесь впервые возникает роль "архитектора", который начинает осмысливать происходящее и планировать как встроить полученный микросервис в существующую систему или проектировать новую на его основе.</p>
+<p>Возникают вопросы: кто и когда запускает обучение, как откатываться к предыдущей версии в случае регрессии, где хранить артефакты обучения и как гарантировать, что обучение можно воспроизвести через месяц или год.</p>
+<p>Google Cloud формализует этот переход через модель зрелости MLOps: уровень 0 — это ручной, полностью управляемый человеком процесс, уровень 1 добавляет контроль непрерывного обучения модели через автоматизированный pipeline, а уровень 2 включает полноценный CI/CD для самого ML-конвейера, включая валидацию данных на каждом шаге [7]. Методология CD4ML описывает те же требования немного иначе — как необходимость сделать обучение модели детерминированным и повторяемым шагом единого конвейера поставки, а не разовым действием исследователя [8].</p>
+<p>Если обучение по-прежнему запускается вручную, команда неизбежно теряет прозрачность: никто точно не знает, какая модель используется в продакшене прямо сейчас, почему была выбрана именно она и можно ли вообще повторить процесс обучения, приведший к этой версии.</p>
+<p>Отдельно стоит сказать про реестр моделей (Registry) — компонент, который на этом этапе перестаёт быть просто удобным хранилищем файлов моделей и становится источником истины о том, какая версия модели где и почему используется. Именно Registry связывает воедино метаданные обучения (какие данные, какой код, какие метрики), сам артефакт модели и статус её продвижения по стадиям — от staging до production. Без этой связки Registry вырождается в свалку файлов с именами вида model_final_v2_new.pkl, что сводит на нет все усилия по автоматизации.</p>
+<p>Pipeline обучает модель воспроизводимо. Но откуда pipeline берёт данные и можно ли доверять их качеству?</p>
+<h2 id="4">Этап 4. Данные становятся системой<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>До этого момента данные были просто файлом. Теперь это полноценная инфраструктура со своими компонентами и владельцами.</p>
+<p>Sources -&gt; ETL -&gt; Feature Store -&gt; Training -&gt; Serving</p>
+<p>Здесь архитектор сталкивается, пожалуй, с самой недооценённой проблемой машинного обучения — она не в модели и не в объёме данных, а в согласованности признаков между обучением и инференсом. Необходимо обеспечить единый набор признаков для train и serving, исключить утечку целевой переменной (data leakage), одинаковую логику обработки данных в обоих контурах и постоянный контроль качества входящих данных. Именно для решения этой проблемы индустрия выработала паттерн Feature Store — общее хранилище признаков, доступное и пайплайну обучения, и сервису инференса.</p>
+<p>Появление управляемых платформ вроде Google Vertex AI с выделенным Feature Store как одним из центральных компонентов — прямое подтверждение того, что эта проблема носит не частный, а системный характер [5]. Sculley и соавторы отдельно подчёркивают, что именно данные, а не код, являются источником самых незаметных и самых дорогих форм технического долга в ML-системах — через скрытые каналы взаимного влияния и недокументированные зависимости между источниками данных [6].</p>
+<p>Классическая ошибка этого этапа — дублирование Feature Engineering: один и тот же код с небольшими отличиями пишется дважды, отдельно для обучения и отдельно для продакшена. Через месяц эксплуатации эти две реализации неизбежно расходятся, и модель в продакшене начинает работать не так, как модель, которую тестировали на исторических данных.</p>
+<p>Data Contracts — ещё один элемент, который на этом этапе из необязательной практики превращается в необходимость. Команда, которая производит данные (например, транзакционная система или система событий на фронтенде), и команда, которая их потребляет для обучения моделей, редко находятся в одном контуре ответственности. Если формат данных или семантика поля меняется без предупреждения, а на практике это происходит регулярно, пайплайн обучения либо падает с ошибкой, либо, что гораздо хуже, продолжает работать, но обучает модель на некорректных данных. Явный контракт, зафиксированный как схема и проверяемый автоматически на входе ETL, превращает эту скрытую зависимость в управляемый и наблюдаемый процесс.</p>
+<p>Итак, данные организованы, признаки согласованы. Но модель до сих пор обслуживает лишь ограниченное число тестовых запросов — что произойдёт, когда её начнут использовать реальные пользователи?</p>
+<h2 id="5-production">Этап 5. Появляется Production<a class="headerlink" href="#5-production" title="Permanent link">&para;</a></h2>
+<p>Модель выходит на реальных пользователей, и вместе с этим появляется совершенно новый класс требований — не к качеству прогноза, а к надёжности сервиса.</p>
+<p>Users -&gt; API Gateway -&gt; Model Service -&gt; Monitoring -&gt; Logs</p>
+<p>Теперь в фокусе оказываются SLA (Service Level Agreement или Соглашение об уровне обслуживания), отказоустойчивость, горизонтальное масштабирование, балансировка нагрузки и безопасность доступа к сервису. Инференс-сервис перестаёт быть отдельным приложением и становится частью общей production-инфраструктуры компании с типовыми для неё control plane, serving plane и observability plane, разворачиваемыми на управляемых вычислительных ресурсах и оркестрируемыми через Kubernetes и контролем доступа пользователей [1].</p>
+<p>Наиболее болезненная ошибка на этом этапе — рассматривать надёжность системы исключительно через призму качества модели. На практике production-система падает совсем по другим причинам: закончилось место в очереди сообщений, переполнился кеш, API не выдержал пиковой нагрузки, а Kubernetes в самый неподходящий момент пересоздал под с моделью, обнулив прогретый кэш.</p>
+<div class="admonition warning">
+<p class="admonition-title">Инфраструктура важнее модели</p>
+<p>На этапе production именно инфраструктурные, а не алгоритмические решения чаще всего определяют качество системы и выдержит ли она реальную нагрузку. Архитектор, который на этом этапе продолжает оптимизировать accuracy вместо латентности p99 и устойчивости к отказам, решает не ту задачу.</p>
+</div>
+<p>Сервис устойчив и обслуживает реальный трафик. Но работает ли модель на самом деле так, как ожидалось?</p>
+<h2 id="6-monitoring">Этап 6. Monitoring<a class="headerlink" href="#6-monitoring" title="Permanent link">&para;</a></h2>
+<p>На этом этапе под контроль берутся уже не только серверы. Ключевой вопрос смещается: не «доступен ли сервис», а «действительно ли модель ещё приносит пользу».</p>
+<p>Приходится измерять качество модели в динамике, отслеживать model drift, data drift и concept drift, контролировать распределение входных признаков, задержки ответа и даже стоимость одного инференса. Google Cloud прямо связывает эту дисциплину с более ранними этапами зрелости: непрерывным обучением, без валидации данных на входе и без мониторинга дрейфа модели попросту не может считаться production-grade процессом [7]. В экосистеме, построенной вокруг MLflow и контейнеризированного serving, наблюдаемость обычно реализуется через связку Prometheus и Grafana поверх выделенной панели мониторинга, которая собирает метрики отдельно от бизнес-логики сервиса [1].</p>
+<p>Самая распространённая и самая дорогая ошибка на этом этапе следить только за CPU и памятью. Модель может отвечать за миллисекунды и не создавать ни одной ошибки на уровне инфраструктуры, при этом её реальное качество на новых данных уже упало вдвое, а бизнес заметит это в лучшем случае через квартальный отчёт.</p>
+<p>Важно различать три вида дрейфа, за которыми приходится следить одновременно.</p>
+<p>Data drift — это изменение распределения входных признаков относительно того, на чём модель обучалась: например, в интернет-магазине меняется возрастной состав покупателей.</p>
+<p>Concept drift — более коварная проблема: сама зависимость между признаками и целевой переменной меняется со временем, даже если распределение входа осталось прежним.</p>
+<p>Model drift — обобщающий термин для наблюдаемого падения качества модели, независимо от того, какая из первых двух причин его вызвала. Без разделения этих понятий команда обычно реагирует на симптом, а не на причину, и переобучает модель там, где на самом деле нужно менять набор признаков.</p>
+<p>Деградация обнаружена вовремя. Следующий вопрос — как на неё реагировать без ручного вмешательства каждый раз.</p>
+<h2 id="7-continuous-learning">Этап 7. Continuous Learning<a class="headerlink" href="#7-continuous-learning" title="Permanent link">&para;</a></h2>
+<p>Любая модель постепенно устаревает вместе с изменением окружающего мира, поэтому вокруг неё необходимо выстроить полноценный жизненный цикл, замкнутый в непрерывный процесс.</p>
+<p>Production -&gt; Monitoring -&gt; Retraining -&gt; Validation -&gt; Canary -&gt; Production</p>
+<p>Здесь встают вопросы иного порядка: как понять, что настал момент для переобучения, как корректно сравнить новую версию модели со старой, как безопасно переключить на неё пользователей и как быстро откатиться назад, если что-то пойдёт не так.</p>
+<p>Для безопасного переключения индустрия использует canary deployment и shadow deployment — постепенный вывод новой модели на часть трафика или её параллельный запуск без влияния на пользователей, что позволяет сравнить метрики до полноценного релиза. Это прямое продолжение принципов непрерываного обучения, о которых говорит Google Cloud [7], и идей CD4ML о непрерывной, воспроизводимой и безопасно откатываемой поставке изменений модели [8].</p>
+<p>Наиболее частая ошибка — переобучение «по расписанию», раз в неделю или раз в месяц, без реального понимания, стала ли новая модель лучше предыдущей и стоило ли вообще тратить ресурсы на переобучение. Такой подход создаёт иллюзию автоматизации, но не даёт ответа на главный вопрос, а принесло ли переобучение пользу.</p>
+<p>Разница между canary и shadow deployment на практике часто вызывает путаницу, хотя она принципиальна. При canary deployment часть реального трафика действительно направляется на новую модель, и её ошибки видны пользователям — риск компенсируется тем, что доля трафика мала и легко управляема. При shadow deployment новая модель получает копию трафика параллельно со старой, но её ответы не показываются пользователям, а лишь логируются для сравнения — это позволяет оценить новую версию без какого-либо риска, хотя и не даёт увидеть реакцию пользователей на неё. Зрелая платформа обычно использует оба паттерна последовательно: сначала shadow для сбора статистики, затем canary для постепенного вывода в боевой режим.</p>
+<p>Жизненный цикл одной модели выстроен. Но что происходит, когда таких моделей становится не одна, а сотни, и ими занимается не одна команда, а десятки?</p>
+<h2 id="8-enterprise-ml-platform">Этап 8. Enterprise ML Platform<a class="headerlink" href="#8-enterprise-ml-platform" title="Permanent link">&para;</a></h2>
+<p>Когда моделей в организации становится сотни, а команд, которые их создают, — десятки, точечные решения перестают масштабироваться. На смену им приходит платформа с общими сервисами: identity, projects, feature store, registry, pipelines, serving, monitoring, security, cost control и governance.</p>
+<p>Теперь роль архитектора приобретает ключевую функцию, он проектирует не модель и даже не отдельный сервис, а платформу, процессы, устройство команд, стандарты безопасности и стоимость эксплуатации всего этого хозяйства.</p>
+<p>В центре внимания оказываются multi-tenancy, чтобы разные команды безопасно делили общую инфраструктуру, GitOps как единый способ доставки изменений, Zero Trust и модели доступа RBAC/ABAC, воспроизводимость на уровне всей платформы, а также compliance и FinOps.</p>
+<p>Появление на рынке управляемых платформ уровня Google Vertex AI, объединяющих Feature Store, Experiments, Pipelines и Continuous Monitoring в единой экосистеме, — по сути, промышленное подтверждение того, что именно такой набор сервисов необходим организации, работающей с ML в масштабе [5]. Governance на этом этапе перестаёт быть формальностью: опыт правительственных программ, таких как Algorithm Charter for Aotearoa New Zealand, где более двадцати государственных ведомств добровольно приняли на себя обязательства по прозрачному, подотчётному и справедливому использованию алгоритмов при поддержке выделенной Data Ethics Advisory Group, показывает, что governance — это не бюрократическая надстройка, а необходимый элемент зрелой платформы, особенно там, где решения моделей затрагивают людей напрямую [3].</p>
+<p>Главная опасность здесь — попытка решать организационные и процессные задачи исключительно техническими средствами, наращивая инфраструктуру без изменения процессов управления доступом, стандартов качества и подотчётности за принимаемые моделью решения.</p>
+<p>Платформа умеет промышленно обслуживать классические ML-модели. Но индустрия уже поставила перед архитектором следующий вопрос — как встроить в эту платформу большие языковые модели и агентов.</p>
+<h2 id="9-ai-platform">Этап 9. AI Platform<a class="headerlink" href="#9-ai-platform" title="Permanent link">&para;</a></h2>
+<p>Следующий уровень зрелости выходит за рамки классического машинного обучения. К привычным компонентам добавляются большие языковые модели, RAG, AI-агенты, протокол MCP, векторные базы данных, оркестрация, машины состояний и policy engine.</p>
+<p>Бизнес сегодня всё активнее рассматривает генеративный ИИ не как угрозу, а как источник роста производительности — этот сдвиг в отношении бизнеса к ИИ прямо отмечается в деловой прессе, освещающей внедрение генеративных моделей компаниями [4]. Именно этот спрос заставляет архитектора выходить за пределы традиционного ML-стека. Теперь он проектирует не отдельную ML-систему, а интеллектуальную платформу предприятия, где LLM и AI-агенты — не изолированные эксперименты, а полноправные компоненты общей архитектуры, подчинённые тем же принципам версионирования, наблюдаемости и governance, что были выработаны на предыдущих этапах.</p>
+<p>Ошибка этого этапа зеркальна ошибке первого: если Jupyter Notebook переносят в продакшен без архитектуры, то LLM и агентов нередко встраивают в платформу без переноса туда же дисциплины версионирования промптов, контроля стоимости токенов и мониторинга качества генерации — то есть повторяют путь, который классическое ML уже успело пройти за десять лет.</p>
+<p>Здесь виток эволюции архитектуры не заканчивается, а начинается заново — на новом уровне сложности, но по тем же принципам.</p>
+<h2 id="_2">Заключение<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>Главная мысль этой статьи проста: каждый следующий этап логически вытекает из предыдущего, а не появляется случайно или по прихоти моды. Архитектор, который пропускает этап — например, пытается построить Enterprise Platform без работающего Monitoring, — обычно вынужден вернуться на пропущенный уровень позже, но уже под давлением production-инцидента, а не в спокойном темпе проектирования.</p>
+<table>
+<thead>
+<tr>
+<th>Этап</th>
+<th>Главный вопрос архитектора</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Notebook</td>
+<td>Работает ли вообще идея?</td>
+</tr>
+<tr>
+<td>Inference API</td>
+<td>Как отдать прогноз пользователю?</td>
+</tr>
+<tr>
+<td>Training Pipeline</td>
+<td>Как повторить обучение?</td>
+</tr>
+<tr>
+<td>Data Platform</td>
+<td>Как гарантировать качество данных?</td>
+</tr>
+<tr>
+<td>Production</td>
+<td>Как обеспечить надежность сервиса?</td>
+</tr>
+<tr>
+<td>Monitoring</td>
+<td>Как понять, что модель деградировала?</td>
+</tr>
+<tr>
+<td>Continuous Learning</td>
+<td>Как автоматически улучшать модель?</td>
+</tr>
+<tr>
+<td>Enterprise Platform</td>
+<td>Как масштабировать разработку на десятки команд?</td>
+</tr>
+<tr>
+<td>AI Platform</td>
+<td>Как объединить классическое ML, LLM и AI-агентов в единую архитектуру?</td>
+</tr>
+</tbody>
+</table>
+<p>Модель, которая показывает впечатляющую accuracy в ноутбуке, это только начало пути, а не завершение работы. Между экспериментом и промышленной системой стоят девять этапов архитектурного взросления, и большинство моделей не доходят до продакшена именно потому, что кто-то пытается перепрыгнуть через один или несколько из них.</p>
+<p>Задача архитектора — не ускорить этот путь искусственно, а пройти его осознанно, зная на каждом шаге, какой вопрос предстоит решить следующим.</p>
+<div class="admonition note">
+<p class="admonition-title">Итог</p>
+<p>Путь от Jupyter Notebook до AI Platform — это не линейный чек-лист, а последовательность архитектурных решений, каждое из которых становится фундаментом для следующего.</p>
+</div>
+<h2 id="_3">Источники<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Shwet Prakash. <em>The Ultimate Guide to Production-Grade MLOps: A Fully Automated CI/CD Pipeline with MLflow, GitHub Actions, AWS EC2 and AWS ECS</em>. Medium. <a href="https://medium.com/@shwet.prakash97/the-ultimate-guide-to-production-grade-mlops-a-fully-automated-ci-cd-pipeline-with-mlflow-github-54956235bd71">https://medium.com/@shwet.prakash97/the-ultimate-guide-to-production-grade-mlops-a-fully-automated-ci-cd-pipeline-with-mlflow-github-54956235bd71</a></li>
+<li>Shailesh Kumar Khanchandani. <em>A Practical MLOps Roadmap: From Python Code to Production-Grade ML Systems</em>. Medium. <a href="https://medium.com/@skk.jodhpur/a-practical-mlops-roadmap-from-python-code-to-production-grade-ml-systems-2ee18181d681">https://medium.com/@skk.jodhpur/a-practical-mlops-roadmap-from-python-code-to-production-grade-ml-systems-2ee18181d681</a></li>
+<li><em>Algorithm Charter for Aotearoa New Zealand</em>. data.govt.nz (NZ Government). <a href="https://data.govt.nz/blog/algorithm-charter-for-aotearoa-new-zealand">https://data.govt.nz/blog/algorithm-charter-for-aotearoa-new-zealand</a></li>
+<li>Hamish Cardwell. <em>Businesses urged to view artificial intelligence as an opportunity, not a threat</em>. RNZ. <a href="https://www.rnz.co.nz/news/business/487847/businesses-urged-to-view-artificial-intelligence-as-an-opportunity-not-a-threat">https://www.rnz.co.nz/news/business/487847/businesses-urged-to-view-artificial-intelligence-as-an-opportunity-not-a-threat</a></li>
+<li>Staff Writer. <em>Google Cloud launches Vertex AI, an all-new ML platform</em>. ITBrief New Zealand. <a href="https://itbrief.co.nz/story/google-cloud-launches-vertex-ai-an-all-new-ml-platform">https://itbrief.co.nz/story/google-cloud-launches-vertex-ai-an-all-new-ml-platform</a></li>
+<li>D. Sculley et al. <em>Hidden Technical Debt in Machine Learning Systems</em>. NeurIPS 2015. <a href="https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf">https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf</a></li>
+<li>Google Cloud Architecture Center. <em>MLOps: Continuous delivery and automation pipelines in machine learning</em>. Google Cloud. <a href="https://docs.cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning">https://docs.cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning</a></li>
+<li>Danilo Sato, Arif Wider, Christoph Windheuser. <em>Continuous Delivery for Machine Learning</em>. martinfowler.com. <a href="https://martinfowler.com/articles/cd4ml.html">https://martinfowler.com/articles/cd4ml.html</a></li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  К началу
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.path", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u041a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u0442\u044c \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0415\u0449\u0451 1 \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.more.other": "\u0415\u0449\u0451 # \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.none": "\u0421\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0435", "search.result.other": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439: #", "search.result.placeholder": "\u041d\u0430\u0447\u043d\u0438\u0442\u0435 \u043f\u0435\u0447\u0430\u0442\u0430\u0442\u044c \u0434\u043b\u044f \u043f\u043e\u0438\u0441\u043a\u0430", "search.result.term.missing": "\u041e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442", "select.version": "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0432\u0435\u0440\u0441\u0438\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

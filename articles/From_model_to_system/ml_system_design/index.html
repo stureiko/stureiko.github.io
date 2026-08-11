@@ -1,0 +1,1691 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI Architect, ML Platform Architect and Principal AI Engineer">
+      
+      
+        <meta name="author" content="Igor Stureiko">
+      
+      
+        <link rel="canonical" href="https://stureiko.github.io/articles/From_model_to_system/ml_system_design/">
+      
+      
+        <link rel="prev" href="../../Tree_questions/three_questions/">
+      
+      
+        <link rel="next" href="../../../resume/">
+      
+      
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+          <link rel="alternate" href="../../../ru/articles/From_model_to_system/ml_system_design/" hreflang="ru">
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>From Notebook to Production ML - Igor Stureiko</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#from-jupyter-notebook-to-a-production-ml-system" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Igor Stureiko" class="md-header__button md-logo" aria-label="Igor Stureiko" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Igor Stureiko
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              From Notebook to Production ML
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ru/articles/From_model_to_system/ml_system_design/" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../experience/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Experience
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../projects/" class="md-tabs__link">
+          
+  
+  
+  Projects
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../architecture/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../teaching/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Teaching
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  Articles
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../resume/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Resume
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../contact/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contact
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Igor Stureiko" class="md-nav__button md-logo" aria-label="Igor Stureiko" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Igor Stureiko
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../experience/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/enterprise-ai-platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Enterprise AI Platform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/ai-assistants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Industrial AI Assistants
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/reinforcement-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/ocr-platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OCR Platform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/zero-trust-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero Trust AI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../teaching/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Articles
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Articles
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Tree_questions/three_questions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Three Fundamental Questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    From Notebook to Production ML
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    From Notebook to Production ML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-1-the-jupyter-notebook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 1. The Jupyter Notebook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-2-the-first-inference-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 2. The First Inference Service
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-3-training-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 3. Training Automation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-4-data-becomes-a-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 4. Data Becomes a System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-5-production-arrives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 5. Production Arrives
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-6-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 6. Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-7-continuous-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 7. Continuous Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-8-enterprise-ml-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 8. Enterprise ML Platform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-9-ai-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 9. AI Platform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../resume/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resume
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contact
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-1-the-jupyter-notebook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 1. The Jupyter Notebook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-2-the-first-inference-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 2. The First Inference Service
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-3-training-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 3. Training Automation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-4-data-becomes-a-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 4. Data Becomes a System
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-5-production-arrives" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 5. Production Arrives
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-6-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 6. Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-7-continuous-learning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 7. Continuous Learning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-8-enterprise-ml-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 8. Enterprise ML Platform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stage-9-ai-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Stage 9. AI Platform
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Articles
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="from-jupyter-notebook-to-a-production-ml-system">From Jupyter Notebook to a Production ML System<a class="headerlink" href="#from-jupyter-notebook-to-a-production-ml-system" title="Permanent link">&para;</a></h1>
+<p><em>Why 90% of models never become production solutions</em></p>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>The story of most ML projects is remarkably repetitive. A Jupyter notebook appears in the data science department. The model shows 98% accuracy on a test set, management is impressed, and the project is declared a success. A few months pass, and it turns out the model never left the notebook: the business isn't using it, it isn't generating revenue, and it is gradually forgotten along with the virtual environment it was trained in — even though its creation consumed months of engineering time. What remains, in the end, is sunk cost. The problem isn't that the model was bad — its metrics proved it worked. The problem is that the cost of moving it into a production loop turned out to be far too high.</p>
+<p>Industry experience, accumulated over many years, shows that only a small fraction of models developed in research mode ever reach production — a figure repeated so often in the professional community that it has become something of an aphorism. The reason isn't the quality of the models or the competence of the data scientists; the reason is that a model is only one small part of a much larger system. Google's now-classic paper "Hidden Technical Debt in Machine Learning Systems" demonstrated this most vividly: the model code itself occupies only a small fraction of the overall architecture, surrounded by a mass of infrastructure components — data verification, feature extraction, serving infrastructure, monitoring, and dozens of others, each accumulating its own technical debt [6].</p>
+<p>A real ML system isn't a model — it's dozens of services, architectural decisions, and an enormous amount of engineering work. The path from the first experiment to a production AI platform is rarely a straight line, but it almost always passes through the same stages of maturation. In this article, we'll walk that path through the eyes of an architect — from a Jupyter notebook to a platform that unifies classical machine learning, LLMs, and AI agents.</p>
+<p>The nine stages described below aren't a rigid methodology or a standard — they're a generalization of a recurring pattern seen in companies of every size, from a startup with a single model to a corporation running dozens of teams. Some organizations move through these stages in a few months; others stretch the transition over years; still others compress several adjacent stages into a single sprint. But the order in which the architectural questions arise is surprisingly stable: first you have to prove the model works at all, and only then that it can work reliably, reproducibly, and at scale. Trying to reverse that order — designing an enterprise platform before a single working model exists — is a classic case of over-engineering: it burns time building architecture for requirements that aren't yet known.</p>
+<h2 id="stage-1-the-jupyter-notebook">Stage 1. The Jupyter Notebook<a class="headerlink" href="#stage-1-the-jupyter-notebook" title="Permanent link">&para;</a></h2>
+<p>At the start there isn't much: a notebook, a dataset, and a trained model. Formally, everything works — you can run the cells top to bottom and get a prediction.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>CSV -&gt; Pandas -&gt; Notebook -&gt; Model
+</code></pre></div>
+<p>This is the stage of pure research, and its value shouldn't be underestimated: it's where the basic hypothesis gets tested — can the model solve the problem at all?</p>
+<p>At this stage, there is no architect as such. There's a researcher, whose main job is to prove the idea works and holds up on real data. Any attempt to design an architecture before a working model exists is effort spent on a problem that doesn't yet exist. The path from Python code in a notebook to a production-grade ML system begins precisely by recognizing that this stage calls not for architecture, but for experimental discipline [2].</p>
+<p>The most common mistake here is ignoring the reproducibility of experiments. After a week of active work, it's already impossible to reconstruct which version of the data was used, which hyperparameters produced the best result, or why one model was chosen over another. This is where the first layer of the hidden technical debt that Sculley and co-authors describe gets laid down: the confusion between code, data, and configuration doesn't arise in production — it arises right here, during uncontrolled experimentation [6].</p>
+<p>It's worth dispelling a common misconception here: reproducibility at the notebook stage isn't about Docker or pipelines — it's about basic discipline. Fixing a seed, saving the dataset version, and logging the hyperparameters and metrics of every run is enough to avoid having to reconstruct the logic of an experiment from memory a month later. The absence of this discipline isn't critical as long as the model lives in the head of a single researcher, but it becomes costly the moment other people join the process at the next stage.</p>
+<p>One common solution at this stage is adopting an ML experiment tracking system — MLflow, Weights &amp; Biases, DVC, or something similar. Doing so is a sign of a researcher's maturity and their intent to keep the experiment at the right standard. These systems let you track hyperparameters, datasets, and model metrics, and to store and retrieve the best model by a chosen metric. Using one can be extremely valuable even for a single engineer, and becomes essential the moment more than one person starts working on the model.</p>
+<p>A notebook can train a model, but the business wants predictions delivered automatically, not on request from a data scientist. This is where the first genuinely architectural task appears: how to expose the model's output to the outside world.</p>
+<h2 id="stage-2-the-first-inference-service">Stage 2. The First Inference Service<a class="headerlink" href="#stage-2-the-first-inference-service" title="Permanent link">&para;</a></h2>
+<p>The model stops being a research artifact and becomes part of the product — it now has to answer requests in real time.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Notebook -&gt; Saved Model -&gt; REST API -&gt; Application
+</code></pre></div>
+<p>The first real circuit of architectural decisions appears: how to serialize the model, where to store it, how to load it when the service starts, how to update it without downtime, and how to scale it under load. The typical stack at this stage is FastAPI for serving requests, MLflow for tracking and versioning the model, and Docker for packaging the environment. Practical experience building a fully automated CI/CD pipeline on top of MLflow, GitHub Actions, FastAPI, and Docker illustrates well what even a minimal production wrapper around a model consists of [1]. It's also worth noting that changing the model is only one of three axes of change in an ML system, alongside code and data; the CD4ML methodology explicitly states that all three axes need to be versioned and deployed reproducibly at the same time [8].</p>
+<p>The most common problem at this stage is a model that gets reloaded on every single request, which kills the service's performance. Close behind are the absence of model version control, the absence of input schema validation, and, as a consequence, an API that breaks after the very first model update because nobody warned consumers that the contract had changed.</p>
+<p>The question of the data contract deserves special attention. Real, often messy traffic from external systems now hits the service's input — not a neatly prepared test dataset. Without an explicit input schema, the model will sooner or later receive a request it was never trained for, and will either return a meaningless prediction or crash on an unhandled exception. Even at this stage, it makes sense to build basic input validation as a separate layer ahead of the model call, rather than as part of the model's own code.</p>
+<p>This stage typically marks the transition from a model in a Jupyter notebook to code organized as separate classes. The data preprocessor, the training code, the inference code, input/output validation, and error handling all split apart. The code stops being a research notebook where the order in which cells are executed affects the result, and takes on the character of a finished project ready for automation.</p>
+<p>Request and response handling is introduced, and the first data contract takes shape.</p>
+<p>The model works and answers requests. But the next question arises: how do you retrain it as new data appears?</p>
+<h2 id="stage-3-training-automation">Stage 3. Training Automation<a class="headerlink" href="#stage-3-training-automation" title="Permanent link">&para;</a></h2>
+<p>Manual training runs give way to a pipeline — a reproducible sequence of steps from raw data to a registered model.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Data -&gt; Validation -&gt; Training -&gt; Evaluation -&gt; Registry
+</code></pre></div>
+<p>At this stage we stop thinking of the model as a single artifact and start designing a process. This is where the role of "architect" first emerges — someone who begins to make sense of what's happening and to plan how to embed the resulting microservice into the existing system, or how to design a new one around it.</p>
+<p>Questions start to arise: who runs training and when, how do you roll back to a previous version in case of regression, where are training artifacts stored, and how do you guarantee that training can be reproduced a month or a year from now?</p>
+<p>Google Cloud formalizes this transition through its MLOps maturity model: level 0 is a manual, fully human-driven process; level 1 adds continuous model training control through an automated pipeline; and level 2 includes full CI/CD for the ML pipeline itself, including data validation at every step [7]. The CD4ML methodology describes the same requirements slightly differently — as the need to make model training a deterministic, repeatable step in a single delivery pipeline, rather than a one-off action performed by a researcher [8].</p>
+<p>If training is still triggered manually, the team inevitably loses visibility: nobody can say for certain which model is currently running in production, why that particular model was chosen, or whether the training process that produced it can even be repeated.</p>
+<p>The model registry deserves its own mention here — a component that, at this stage, stops being a convenient file store and becomes the source of truth for which model version is used where and why. It's the registry that ties together the training metadata (which data, which code, which metrics), the model artifact itself, and its promotion status across stages, from staging to production. Without that link, the registry degenerates into a dumping ground of files named things like <code>model_final_v2_new.pkl</code>, which undoes all the effort put into automation.</p>
+<p>The pipeline trains the model reproducibly. But where does the pipeline get its data from, and can that data's quality be trusted?</p>
+<h2 id="stage-4-data-becomes-a-system">Stage 4. Data Becomes a System<a class="headerlink" href="#stage-4-data-becomes-a-system" title="Permanent link">&para;</a></h2>
+<p>Up to this point, data was just a file. Now it's full-fledged infrastructure with its own components and owners.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Sources -&gt; ETL -&gt; Feature Store -&gt; Training -&gt; Serving
+</code></pre></div>
+<p>Here the architect runs into what is arguably the most underestimated problem in machine learning — not the model, not the volume of data, but the consistency of features between training and inference. You need a single set of features shared by training and serving, no leakage of the target variable, identical data-processing logic in both loops, and continuous quality control over incoming data. It's precisely to solve this problem that the industry developed the Feature Store pattern — a shared feature repository accessible both to the training pipeline and to the inference service.</p>
+<p>The emergence of managed platforms such as Google Vertex AI, with a dedicated Feature Store as one of their central components, is direct confirmation that this problem is systemic rather than isolated [5]. Sculley and co-authors separately emphasize that it's data, not code, that is the source of the most invisible and most expensive forms of technical debt in ML systems — through hidden feedback loops and undocumented dependencies between data sources [6].</p>
+<p>The classic mistake at this stage is duplicating feature engineering: the same logic, with small variations, gets written twice — once for training, once for production. After a month in operation, these two implementations inevitably diverge, and the model in production starts behaving differently from the model that was validated on historical data.</p>
+<p>Data contracts are another element that shifts, at this stage, from optional practice to necessity. The team that produces data (a transactional system, say, or a frontend event system) and the team that consumes it for model training rarely sit within the same circle of responsibility. If the data format or the semantics of a field change without warning — and in practice this happens routinely — the training pipeline either fails outright or, worse, keeps running and trains the model on corrupted data. An explicit contract, captured as a schema and validated automatically at the ETL entry point, turns this hidden dependency into a managed, observable process.</p>
+<p>So: the data is organized, the features are consistent. But the model still serves only a limited number of test requests — what happens once real users start relying on it?</p>
+<h2 id="stage-5-production-arrives">Stage 5. Production Arrives<a class="headerlink" href="#stage-5-production-arrives" title="Permanent link">&para;</a></h2>
+<p>The model goes live for real users, and with that comes an entirely new class of requirements — not about prediction quality, but about service reliability.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Users -&gt; API Gateway -&gt; Model Service -&gt; Monitoring -&gt; Logs
+</code></pre></div>
+<p>The focus now shifts to SLAs (Service Level Agreements), fault tolerance, horizontal scaling, load balancing, and access security. The inference service stops being a standalone application and becomes part of the company's broader production infrastructure, with its typical control plane, serving plane, and observability plane, deployed on managed compute and orchestrated through Kubernetes with proper user access control [1].</p>
+<p>The most painful mistake at this stage is viewing system reliability purely through the lens of model quality. In practice, production systems fail for entirely different reasons: a message queue runs out of space, a cache fills up, an API can't handle a traffic spike, or Kubernetes recreates the pod running the model at the worst possible moment, wiping out a warmed-up cache.</p>
+<div class="admonition warning">
+<p class="admonition-title">Infrastructure matters more than the model</p>
+<p>At the production stage, infrastructure decisions — not algorithmic ones — most often determine the quality of the system and whether it survives real load. An architect who keeps optimizing accuracy instead of p99 latency and fault tolerance at this stage is solving the wrong problem.</p>
+</div>
+<p>The service is stable and serving real traffic. But is the model actually delivering the value it was expected to?</p>
+<h2 id="stage-6-monitoring">Stage 6. Monitoring<a class="headerlink" href="#stage-6-monitoring" title="Permanent link">&para;</a></h2>
+<p>At this stage, it's no longer just servers that come under scrutiny. The central question shifts: not "is the service available," but "is the model still actually useful."</p>
+<p>You now have to measure model quality over time, track model drift, data drift, and concept drift, monitor the distribution of input features, watch response latency, and even track the cost of a single inference call. Google Cloud explicitly ties this discipline to the earlier maturity stages: without continuous training, without input data validation, and without model drift monitoring, a process simply cannot be called production-grade [7]. In an ecosystem built around MLflow and containerized serving, observability is typically implemented through Prometheus and Grafana on top of a dedicated monitoring dashboard that collects metrics separately from the service's business logic [1].</p>
+<p>The most common — and most expensive — mistake at this stage is watching only CPU and memory. A model can respond in milliseconds and produce zero infrastructure-level errors, while its real-world quality on new data has already dropped by half, and the business won't notice until, at best, the next quarterly report.</p>
+<p>It's important to distinguish between three types of drift that need to be tracked simultaneously.</p>
+<p>Data drift is a change in the distribution of input features relative to what the model was trained on — for example, the age profile of shoppers changes in an online store.</p>
+<p>Concept drift is a trickier problem: the relationship between the features and the target variable itself changes over time, even if the input distribution stays the same.</p>
+<p>Model drift is the umbrella term for an observed drop in model quality, regardless of which of the first two causes triggered it. Without distinguishing between these, a team typically reacts to the symptom rather than the cause, and retrains the model when what actually needs to change is the feature set.</p>
+<p>Degradation is caught in time. The next question is how to respond to it without manual intervention every single time.</p>
+<h2 id="stage-7-continuous-learning">Stage 7. Continuous Learning<a class="headerlink" href="#stage-7-continuous-learning" title="Permanent link">&para;</a></h2>
+<p>Every model gradually becomes outdated as the world around it changes, so it needs a full lifecycle built around it — one closed into a continuous loop.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Production -&gt; Monitoring -&gt; Retraining -&gt; Validation -&gt; Canary -&gt; Production
+</code></pre></div>
+<p>Here a different order of questions arises: how do you know it's time to retrain, how do you properly compare a new model version against the old one, how do you safely switch users over to it, and how do you roll back quickly if something goes wrong?</p>
+<p>To switch safely, the industry uses canary deployment and shadow deployment — gradually rolling the new model out to a portion of traffic, or running it in parallel without affecting users at all, which lets you compare metrics before a full release. This is a direct continuation of the continuous-training principles Google Cloud describes [7], and of CD4ML's ideas about continuous, reproducible, and safely reversible delivery of model changes [8].</p>
+<p>The most common mistake is retraining "on a schedule" — once a week or once a month — without any real understanding of whether the new model actually improved on the previous one, or whether the retraining was worth the resources spent on it at all. This approach creates the illusion of automation without answering the one question that matters: did the retraining actually help?</p>
+<p>The difference between canary and shadow deployment is often a source of confusion in practice, even though it's fundamental. In a canary deployment, a portion of real traffic is genuinely routed to the new model, and its mistakes are visible to users — the risk is offset by keeping that traffic share small and tightly controlled. In a shadow deployment, the new model receives a copy of the traffic in parallel with the old one, but its responses are never shown to users — only logged for comparison — which lets you evaluate the new version with zero risk, though it tells you nothing about how users would actually react to it. A mature platform typically uses both patterns in sequence: shadow first, to gather statistics, then canary, to roll out gradually into live operation.</p>
+<p>The lifecycle of a single model is now in place. But what happens when there isn't just one model anymore, but hundreds — and not one team managing them, but dozens?</p>
+<h2 id="stage-8-enterprise-ml-platform">Stage 8. Enterprise ML Platform<a class="headerlink" href="#stage-8-enterprise-ml-platform" title="Permanent link">&para;</a></h2>
+<p>Once an organization has hundreds of models and dozens of teams building them, one-off solutions stop scaling. They're replaced by a platform with shared services: identity, projects, feature store, registry, pipelines, serving, monitoring, security, cost control, and governance.</p>
+<p>The architect's role now takes on a central function: they design not a model, not even a single service, but the platform itself, its processes, team structure, security standards, and the operating cost of the whole enterprise.</p>
+<p>The focus shifts to multi-tenancy, so that different teams can safely share common infrastructure; GitOps as the single way changes get delivered; Zero Trust and RBAC/ABAC access models; reproducibility at the level of the entire platform; and compliance and FinOps.</p>
+<p>The emergence of managed platforms at the level of Google Vertex AI — unifying Feature Store, Experiments, Pipelines, and Continuous Monitoring in a single ecosystem — is essentially industrial confirmation that this exact set of services is what an organization operating ML at scale actually needs [5]. Governance stops being a formality at this stage: the experience of government programs such as the Algorithm Charter for Aotearoa New Zealand, where more than twenty government agencies voluntarily committed to transparent, accountable, and fair use of algorithms with the support of a dedicated Data Ethics Advisory Group, shows that governance isn't bureaucratic overhead — it's a necessary element of a mature platform, especially where model decisions directly affect people [3].</p>
+<p>The main danger here is trying to solve organizational and process problems purely with technical means — scaling up infrastructure without changing access-management processes, quality standards, or accountability for the decisions the model makes.</p>
+<p>The platform can now serve classical ML models at industrial scale. But the industry has already posed the next question to the architect: how do you fold large language models and agents into this same platform?</p>
+<h2 id="stage-9-ai-platform">Stage 9. AI Platform<a class="headerlink" href="#stage-9-ai-platform" title="Permanent link">&para;</a></h2>
+<p>The next level of maturity goes beyond classical machine learning. Large language models, RAG, AI agents, the MCP protocol, vector databases, orchestration, state machines, and policy engines all get added to the familiar set of components.</p>
+<p>Businesses today increasingly see generative AI not as a threat, but as a source of productivity growth — this shift in business sentiment toward AI is directly noted in the business press covering companies adopting generative models [4]. It's exactly this demand that pushes the architect beyond the traditional ML stack. Now they're designing not a standalone ML system, but an intelligent enterprise platform, where LLMs and AI agents aren't isolated experiments but full-fledged components of the overall architecture, subject to the same principles of versioning, observability, and governance developed at earlier stages.</p>
+<p>The mistake at this stage mirrors the mistake of the first one: just as a Jupyter notebook gets pushed into production without any architecture around it, LLMs and agents are often bolted onto the platform without bringing along the discipline of prompt versioning, token cost control, and generation quality monitoring — repeating, in effect, a journey classical ML already took ten years to complete.</p>
+<p>Here, the evolutionary cycle of the architecture doesn't end — it begins again, at a new level of complexity, but following the same principles.</p>
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
+<p>The central idea of this article is simple: each stage follows logically from the one before it — it doesn't appear by accident or by fashion. An architect who skips a stage — say, trying to build an Enterprise Platform without working Monitoring in place — is usually forced to return to the skipped level later, but now under the pressure of a production incident rather than at the calm pace of deliberate design.</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>The architect's central question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Notebook</td>
+<td>Does the idea even work?</td>
+</tr>
+<tr>
+<td>Inference API</td>
+<td>How do you deliver a prediction to the user?</td>
+</tr>
+<tr>
+<td>Training Pipeline</td>
+<td>How do you reproduce training?</td>
+</tr>
+<tr>
+<td>Data Platform</td>
+<td>How do you guarantee data quality?</td>
+</tr>
+<tr>
+<td>Production</td>
+<td>How do you ensure service reliability?</td>
+</tr>
+<tr>
+<td>Monitoring</td>
+<td>How do you know the model has degraded?</td>
+</tr>
+<tr>
+<td>Continuous Learning</td>
+<td>How do you improve the model automatically?</td>
+</tr>
+<tr>
+<td>Enterprise Platform</td>
+<td>How do you scale development across dozens of teams?</td>
+</tr>
+<tr>
+<td>AI Platform</td>
+<td>How do you unify classical ML, LLMs, and AI agents into a single architecture?</td>
+</tr>
+</tbody>
+</table>
+<p>A model that shows impressive accuracy in a notebook is only the beginning of the journey, not the finish line. Between an experiment and a production system stand nine stages of architectural maturation, and most models never reach production precisely because someone tries to skip over one or more of them.</p>
+<p>The architect's job isn't to artificially speed up this path, but to walk it deliberately — knowing, at every step, which question needs to be answered next.</p>
+<div class="admonition note">
+<p class="admonition-title">Bottom line</p>
+<p>The path from a Jupyter notebook to an AI platform isn't a linear checklist — it's a sequence of architectural decisions, each one becoming the foundation for the next.</p>
+</div>
+<h2 id="sources">Sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Shwet Prakash. <em>The Ultimate Guide to Production-Grade MLOps: A Fully Automated CI/CD Pipeline with MLflow, GitHub Actions, AWS EC2 and AWS ECS</em>. Medium. <a href="https://medium.com/@shwet.prakash97/the-ultimate-guide-to-production-grade-mlops-a-fully-automated-ci-cd-pipeline-with-mlflow-github-54956235bd71">https://medium.com/@shwet.prakash97/the-ultimate-guide-to-production-grade-mlops-a-fully-automated-ci-cd-pipeline-with-mlflow-github-54956235bd71</a></li>
+<li>Shailesh Kumar Khanchandani. <em>A Practical MLOps Roadmap: From Python Code to Production-Grade ML Systems</em>. Medium. <a href="https://medium.com/@skk.jodhpur/a-practical-mlops-roadmap-from-python-code-to-production-grade-ml-systems-2ee18181d681">https://medium.com/@skk.jodhpur/a-practical-mlops-roadmap-from-python-code-to-production-grade-ml-systems-2ee18181d681</a></li>
+<li><em>Algorithm Charter for Aotearoa New Zealand</em>. data.govt.nz (NZ Government). <a href="https://data.govt.nz/blog/algorithm-charter-for-aotearoa-new-zealand">https://data.govt.nz/blog/algorithm-charter-for-aotearoa-new-zealand</a></li>
+<li>Hamish Cardwell. <em>Businesses urged to view artificial intelligence as an opportunity, not a threat</em>. RNZ. <a href="https://www.rnz.co.nz/news/business/487847/businesses-urged-to-view-artificial-intelligence-as-an-opportunity-not-a-threat">https://www.rnz.co.nz/news/business/487847/businesses-urged-to-view-artificial-intelligence-as-an-opportunity-not-a-threat</a></li>
+<li>Staff Writer. <em>Google Cloud launches Vertex AI, an all-new ML platform</em>. ITBrief New Zealand. <a href="https://itbrief.co.nz/story/google-cloud-launches-vertex-ai-an-all-new-ml-platform">https://itbrief.co.nz/story/google-cloud-launches-vertex-ai-an-all-new-ml-platform</a></li>
+<li>D. Sculley et al. <em>Hidden Technical Debt in Machine Learning Systems</em>. NeurIPS 2015. <a href="https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf">https://proceedings.neurips.cc/paper_files/paper/2015/file/86df7dcfd896fcaf2674f757a2463eba-Paper.pdf</a></li>
+<li>Google Cloud Architecture Center. <em>MLOps: Continuous delivery and automation pipelines in machine learning</em>. Google Cloud. <a href="https://docs.cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning">https://docs.cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning</a></li>
+<li>Danilo Sato, Arif Wider, Christoph Windheuser. <em>Continuous Delivery for Machine Learning</em>. martinfowler.com. <a href="https://martinfowler.com/articles/cd4ml.html">https://martinfowler.com/articles/cd4ml.html</a></li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.path", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
