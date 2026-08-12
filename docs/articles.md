@@ -2,7 +2,7 @@
 
 <div class="grid cards" markdown>
 
--   :material-robot:{ .lg .middle } **[The Three Fundamental Questions of Architecture](articles/Tree_questions/three_questions.md)**
+-   :material-robot:{ .lg .middle } **[Why, What, How: Three Levels of Architectural Thinking](articles/Tree_questions/three_questions.md)**
 
     Why, What and How — a practical model for separating enterprise, solution and software architecture decisions.
 

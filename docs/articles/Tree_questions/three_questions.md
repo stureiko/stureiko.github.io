@@ -1,4 +1,4 @@
-# The Three Fundamental Questions of Architecture: Why, What, and How
+# Why, What, How: Three Levels of Architectural Thinking
 
 There are three questions that any large IT system's architecture cannot afford to leave unanswered without becoming inefficient and poorly scalable: *Why*, *What*, and *How*. These questions are not arbitrary — a similar structure already appears in the [Zachman Framework](https://medium.com/datacrat/zachman-framework-73cbb960a4eb), the classic enterprise-architecture model in which rows represent perspectives on the system (What, How, Where, Who, When, Why) and columns represent levels of detail, from business context down to finished implementation. The three questions discussed in this article are a simplified but practical projection of that same principle onto an architect's day-to-day work.
 
@@ -110,8 +110,9 @@ Let's walk through a real case: building an AI platform for a company.
 * Kubernetes — the container orchestration platform;
 * Kubeflow — ML pipeline orchestration;
 * MLflow — experiment tracking and model versioning;
+* MLflow Model Registry — models;
 * Feast — the single source of features for training and inference;
-* Harbor — the catalog and lifecycle management for models;
+* Harbor — OCI/container artifact registry;
 * ArgoCD — GitOps-based delivery;
 * KServe — the model serving layer;
 * Kafka — streaming of data and events;

@@ -1,6 +1,6 @@
 # From Jupyter Notebook to a Production ML System
 
-*Why 90% of models never become production solutions*
+*Why Successful ML Models Still Fail to Become Production Systems*
 
 ## Introduction
 
