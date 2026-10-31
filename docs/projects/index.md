@@ -5,14 +5,24 @@ structure: **challenge → my role → architecture highlights → stack**.
 
 <div class="grid cards" markdown>
 
--   :material-factory:{ .lg .middle } **[Enterprise AI Platform](enterprise-ai-platform.md)**
+-   :material-factory:{ .lg .middle } **[AtomMind Industrial AI Platform](enterprise-ai-platform.md)**
 
     ---
 
-    `2024 · TVEL Rosatom JSC · AI Architect`
+    `2024 — present · DM-Solutions / TVEL Rosatom JSC · Chief Architect`
 
-    ML life-cycle management platform (AtomMind 2.0) for the nuclear
-    industry — MLOps stack, platform architecture, security compliance.
+    Industrial AI platform — architecture ownership, MLOps integration and governed AI services, with explicit design and implementation boundaries.
+
+-   :material-airplane:{ .lg .middle } **[Saina Airline Revenue Management](saina-revenue-management.md)**
+
+    ---
+
+    `2025 — present · Saina · ML Team Lead / Lead ML Engineer`
+
+    Built an airline revenue management system spanning demand forecasting,
+    EMSR seat optimisation, ML delivery and RL shadow evaluation.
+
+    [:octicons-arrow-right-24: Case study](saina-revenue-management.md)
 
 -   :material-robot:{ .lg .middle } **[Industrial AI Assistants](ai-assistants.md)**
 

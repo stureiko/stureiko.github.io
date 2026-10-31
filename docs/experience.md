@@ -1,26 +1,37 @@
 # Experience
 
 Leadership and hands-on architecture across energy, nuclear industry,
-quantitative finance and education.
+aviation, quantitative finance and education.
 
-## AI Architect · ML Team Lead — DM-Solutions
+## Chief Architect · ML Team Lead — DM-Solutions
 
 `2024 — present · remote`
 
-- Designed industrial predictive-analytics systems.
-- Designed AI assistants for industrial and production-engineering workflows.
-- Architected an AI subsystem for building predictive models.
-- Led model development and training teams.
-- Designed infrastructure for ML model deployment and production operations.
-- Adapted solutions to national security-compliance requirements (FSTEC).
+- Owned the overall AtomMind architecture and its main design decisions.
+- Defined subsystem boundaries, integration contracts and technology choices using C4 models and decision records.
+- Designed MLOps and governed AI services; aligned implementation planning with platform and security requirements.
+- Reconciled target architecture with implementation evidence and documented delivery gaps.
 
-## Instructor · Course Director — OTUS
+[AtomMind case study](projects/enterprise-ai-platform.md)
+
+## ML Team Lead · Lead ML Engineer — Saina
+
+`2025 — present · remote`
+
+- Built the Saina airline revenue management system, combining team leadership with hands-on ML engineering.
+- Developed demand forecasting, seat-allocation optimisation and model-delivery workflows.
+- Integrated training, inference and quality controls with operational services.
+- Developed and evaluated RL booking-limit approaches through simulation and shadow recommendations.
+
+[Saina case study](projects/saina-revenue-management.md)
+
+## Course Director · Instructor — OTUS
 
 `2023 — present · remote`
 
-Course Director for four tracks: **Reinforcement Learning**,
-**Quantitative Finance**, **Machine Learning (Basic & Professional)** and
-**MLOps**. Details on the [Teaching](teaching.md) page.
+Direct six programmes: AgentOps, Reinforcement Learning, MLOps, Machine Learning for Financial Analysis, Machine Learning: Basic and Machine Learning: Professional. Also teach on architecture, AI agents, recommender systems and Python programmes.
+
+[Courses and teaching appointments](teaching.md)
 
 ## Quantitative ML Engineer · Team Lead — Confidential (NDA)
 

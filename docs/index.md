@@ -1,6 +1,6 @@
 # Igor Stureiko
 
-## AI Architect · ML Platform Architect · Principal AI Engineer · ML team lead
+## AI & Solution Architect · Enterprise Platforms
 
 I am an AI Architect with more than 20 years of experience designing and delivering software systems, 
 machine learning platforms, and AI solutions for enterprise and industrial environments. 
@@ -49,21 +49,30 @@ I believe successful AI systems are built not only on strong models, but on robu
 
 <div class="grid cards" markdown>
 
--   :material-factory:{ .lg .middle } **[Enterprise AI Platform](projects/enterprise-ai-platform.md)**
+-   :material-factory:{ .lg .middle } **[AtomMind Industrial AI Platform](projects/enterprise-ai-platform.md)**
 
     ---
 
-    ML life-cycle management platform for the nuclear industry —
-    MLOps stack, platform architecture, security compliance.
+    Industrial AI platform — overall architecture ownership, MLOps integration, governed AI services and implementation alignment.
 
     [:octicons-arrow-right-24: Case study](projects/enterprise-ai-platform.md)
+
+-   :material-airplane:{ .lg .middle } **[Saina Airline Revenue Management](projects/saina-revenue-management.md)**
+
+    ---
+
+    `2025 — present · Saina · ML Team Lead / Lead ML Engineer`
+
+    Built an airline revenue management system spanning demand forecasting,
+    EMSR seat optimisation, ML delivery and RL shadow evaluation.
+
+    [:octicons-arrow-right-24: Case study](projects/saina-revenue-management.md)
 
 -   :material-robot:{ .lg .middle } **[Industrial AI Assistants](projects/ai-assistants.md)**
 
     ---
 
-    LLM-based assistants for production engineers — agent orchestration,
-    on-premise serving, full data locality.
+    Governed model and tool access for engineering workflows — gateway design, policy enforcement and phased orchestration.
 
     [:octicons-arrow-right-24: Case study](projects/ai-assistants.md)
 
@@ -93,7 +102,7 @@ I believe successful AI systems are built not only on strong models, but on robu
 
 - More than 20 years in software engineering, applied mathematics and AI
 - PhD in Theoretical Physics
-- AI Architect and ML Team Lead
-- Course Director for Machine Learning, MLOps, Reinforcement Learning and Quantitative Finance
+- Chief Architect, ML Team Lead and hands-on Lead ML Engineer
+- Course Director for six programmes spanning AgentOps, MLOps, RL and applied ML
 - Experience designing secure enterprise AI platforms
 

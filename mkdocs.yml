@@ -1,5 +1,5 @@
 site_name: Igor Stureiko
-site_description: AI Architect, ML Platform Architect and Principal AI Engineer
+site_description: AI and Solution Architect — Enterprise Platforms, ML Engineering and Technical Leadership
 site_author: Igor Stureiko
 site_url: https://stureiko.github.io
 
@@ -38,7 +38,8 @@ nav:
   - Experience: experience.md
   - Projects:
       - Overview: projects/index.md
-      - Enterprise AI Platform: projects/enterprise-ai-platform.md
+      - AtomMind Industrial AI Platform: projects/enterprise-ai-platform.md
+      - Saina Airline Revenue Management: projects/saina-revenue-management.md
       - Industrial AI Assistants: projects/ai-assistants.md
       - Reinforcement Learning: projects/reinforcement-learning.md
       - OCR Platform: projects/ocr-platform.md

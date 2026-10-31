@@ -8,7 +8,7 @@ graph optimisation for national pipeline networks, hydraulic modelling,
 Markov-chain reliability models — long before "data science" became a job
 title.
 
-Today I work as an **AI Architect and ML Team Lead**, designing production
+Today I work as an **AI and Solution Architect, Chief Architect and ML Team Lead**, designing production
 AI platforms for industrial and enterprise environments: MLOps systems,
 AI agents for engineering workflows, predictive analytics at
 national-infrastructure scale.
@@ -22,13 +22,12 @@ national-infrastructure scale.
   and maintained doesn't exist. I build the full life cycle — from
   requirements to on-site rollout and operational support.
 - **Teams over heroes.** I've led multi-disciplinary teams of 20+
-  specialists and directed four course tracks at OTUS. Explaining complex
+  specialists and direct six programmes at OTUS. Explaining complex
   systems clearly is half of an architect's job.
 
 ## Beyond engineering
 
-- Course Director at OTUS for Machine Learning, MLOps, Reinforcement
-  Learning and Quantitative Finance tracks, System design and Architecture.
+- Course Director at OTUS for AgentOps, Reinforcement Learning, MLOps, ML for Financial Analysis, and Machine Learning: Basic and Professional; instructor on additional architecture, AI and Python courses.
 - Studied physics at Philipps-Universität Marburg, Germany.
 - Experience evaluating the economic side of engineering: risk assessment,
   feasibility studies, investment effectiveness.

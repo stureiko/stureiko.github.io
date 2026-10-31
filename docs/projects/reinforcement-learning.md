@@ -27,6 +27,14 @@ offline policy evaluation, and teaching the discipline end-to-end.
 - Model testing, preparation for deployment, rollout to production and
   performance monitoring.
 
+## Airline booking-limit policies — Saina
+
+`2025 — present · ML Team Lead / Lead ML Engineer`
+
+Built ML workflows for airline revenue management, including RL booking-limit simulation, PPO-based policies and batch recommendations. Policies are evaluated in simulation and shadow mode; these results do not establish causal revenue uplift or approval for autonomous live decisions.
+
+[Full Saina case study](saina-revenue-management.md)
+
 ## Teaching RL — OTUS
 
 `2023 — present · Course Director`
