@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="AI Architect, ML Platform Architect and Principal AI Engineer">
+        <meta name="description" content="AI and Solution Architect — Enterprise Platforms, ML Engineering and Technical Leadership">
       
       
         <meta name="author" content="Igor Stureiko">
@@ -84,7 +84,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#the-three-fundamental-questions-of-architecture-why-what-and-how" class="md-skip">
+        <a href="#why-what-how-three-levels-of-architectural-thinking" class="md-skip">
           Skip to content
         </a>
       
@@ -623,7 +623,35 @@
   <span class="md-ellipsis">
     
   
-    Enterprise AI Platform
+    AtomMind Industrial AI Platform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/saina-revenue-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Saina Airline Revenue Management
   
 
     
@@ -1452,7 +1480,7 @@
 
 
 
-<h1 id="the-three-fundamental-questions-of-architecture-why-what-and-how">The Three Fundamental Questions of Architecture: Why, What, and How<a class="headerlink" href="#the-three-fundamental-questions-of-architecture-why-what-and-how" title="Permanent link">&para;</a></h1>
+<h1 id="why-what-how-three-levels-of-architectural-thinking">Why, What, How: Three Levels of Architectural Thinking<a class="headerlink" href="#why-what-how-three-levels-of-architectural-thinking" title="Permanent link">&para;</a></h1>
 <p>There are three questions that any large IT system's architecture cannot afford to leave unanswered without becoming inefficient and poorly scalable: <em>Why</em>, <em>What</em>, and <em>How</em>. These questions are not arbitrary — a similar structure already appears in the <a href="https://medium.com/datacrat/zachman-framework-73cbb960a4eb">Zachman Framework</a>, the classic enterprise-architecture model in which rows represent perspectives on the system (What, How, Where, Who, When, Why) and columns represent levels of detail, from business context down to finished implementation. The three questions discussed in this article are a simplified but practical projection of that same principle onto an architect's day-to-day work.</p>
 <p>It is useful to map these questions onto three levels of architectural work: Enterprise Architect, Solution Architect, and Software Architect. Each answers a different question:</p>
 <ul>
@@ -1533,8 +1561,9 @@
 <li>Kubernetes — the container orchestration platform;</li>
 <li>Kubeflow — ML pipeline orchestration;</li>
 <li>MLflow — experiment tracking and model versioning;</li>
+<li>MLflow Model Registry — models;</li>
 <li>Feast — the single source of features for training and inference;</li>
-<li>Harbor — the catalog and lifecycle management for models;</li>
+<li>Harbor — OCI/container artifact registry;</li>
 <li>ArgoCD — GitOps-based delivery;</li>
 <li>KServe — the model serving layer;</li>
 <li>Kafka — streaming of data and events;</li>

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="AI Architect, ML Platform Architect and Principal AI Engineer">
+        <meta name="description" content="AI and Solution Architect — Enterprise Platforms, ML Engineering and Technical Leadership">
       
       
         <meta name="author" content="Igor Stureiko">
@@ -15,7 +15,7 @@
         <link rel="canonical" href="https://stureiko.github.io/projects/ai-assistants/">
       
       
-        <link rel="prev" href="../enterprise-ai-platform/">
+        <link rel="prev" href="../saina-revenue-management/">
       
       
         <link rel="next" href="../reinforcement-learning/">
@@ -84,7 +84,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#industrial-ai-assistants" class="md-skip">
+        <a href="#industrial-ai-assistants-atommind-ai-hub" class="md-skip">
           Skip to content
         </a>
       
@@ -628,7 +628,35 @@
   <span class="md-ellipsis">
     
   
-    Enterprise AI Platform
+    AtomMind Industrial AI Platform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../saina-revenue-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Saina Airline Revenue Management
   
 
     
@@ -731,21 +759,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#architecture-highlights" class="md-nav__link">
+  <a href="#design-and-implementation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Architecture highlights
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#stack" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Stack
+        Design and implementation
       
     </span>
   </a>
@@ -1212,21 +1229,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#architecture-highlights" class="md-nav__link">
+  <a href="#design-and-implementation" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Architecture highlights
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#stack" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Stack
+        Design and implementation
       
     </span>
   </a>
@@ -1298,35 +1304,55 @@
 
 
 
-<h1 id="industrial-ai-assistants">Industrial AI Assistants<a class="headerlink" href="#industrial-ai-assistants" title="Permanent link">&para;</a></h1>
-<p><code>2024 — present · DM-Solutions · AI Architect</code></p>
+<h1 id="industrial-ai-assistants-atommind-ai-hub">Industrial AI Assistants — AtomMind AI-Hub<a class="headerlink" href="#industrial-ai-assistants-atommind-ai-hub" title="Permanent link">&para;</a></h1>
+<p><code>2024 — present · DM-Solutions · Chief Architect</code></p>
 <h2 id="challenge">Challenge<a class="headerlink" href="#challenge" title="Permanent link">&para;</a></h2>
-<p>Production and industrial engineering workflows are full of expert
-knowledge locked in documentation, regulations and the heads of senior
-engineers. The goal: LLM-based assistants that make this knowledge
-operational — without sending sensitive industrial data to external APIs.</p>
+<p>Support industrial and production-engineering workflows with controlled access to models and tools. Sensitive data, user identity, model permissions and human approvals must be considered as part of the architecture.</p>
 <h2 id="my-role">My role<a class="headerlink" href="#my-role" title="Permanent link">&para;</a></h2>
+<p>As AtomMind's Chief Architect, I defined the main design decisions connecting assistant workflows with the platform, MLOps services and security controls.</p>
 <ul>
-<li>Designed AI assistants for industrial and production-engineering
-  workflows.</li>
-<li>Architected the AI subsystem for developing predictive models.</li>
-<li>Designed deployment infrastructure for production operation of models.</li>
-<li>Led the model development and training teams.</li>
-<li>Adapted the architecture to security-compliance requirements (FSTEC).</li>
+<li>Defined assistant requirements for production engineers and ML development workflows.</li>
+<li>Designed model and MCP tool access through controlled gateways and registry-backed AI profiles.</li>
+<li>Defined policy, filtering, audit and model-integrity requirements.</li>
+<li>Defined durable orchestration and human-in-the-loop requirements and phased implementation scope.</li>
 </ul>
-<h2 id="architecture-highlights">Architecture highlights<a class="headerlink" href="#architecture-highlights" title="Permanent link">&para;</a></h2>
-<ul>
-<li><strong>Agent orchestration</strong> with tool integration: assistants query
-  predictive models, documentation and enterprise systems rather than
-  hallucinating answers.</li>
-<li><strong>On-premise LLM serving</strong> — no external API dependency, full data
-  locality.</li>
-<li><strong>Role-specific assistants</strong>: a production engineer and an ML engineer
-  get different capabilities on the same platform core.</li>
-</ul>
-<h2 id="stack">Stack<a class="headerlink" href="#stack" title="Permanent link">&para;</a></h2>
-<p><code>LangChain</code> · <code>LangGraph</code> · <code>RAG</code> · <code>PyTorch</code> · <code>Kubernetes</code> · <code>KServe</code> ·
-<code>MLFlow</code> · <code>Apache Airflow</code></p>
+<h2 id="design-and-implementation">Design and implementation<a class="headerlink" href="#design-and-implementation" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Architecture and reviewed evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model and tool access</td>
+<td>Envoy with Go control services; MCP routing and OPA policy decisions</td>
+</tr>
+<tr>
+<td>Registry and governance</td>
+<td>Go/PostgreSQL registry, AI profiles, quotas and admission controls</td>
+</tr>
+<tr>
+<td>Filtering and integrity</td>
+<td>Data Guard, inference Helm charts and SHA-256 model-weight checks</td>
+</tr>
+<tr>
+<td>Workflow execution</td>
+<td>Python/Temporal workflows with a custom pipeline runtime</td>
+</tr>
+<tr>
+<td>LangGraph</td>
+<td>Documented design choice; absent from the reviewed runtime implementation</td>
+</tr>
+<tr>
+<td>Document ingestion and key management</td>
+<td>Full OCR/document pipeline and target key-management integration remain incomplete or planned</td>
+</tr>
+</tbody>
+</table>
+<p>Local inference and controlled external access are architectural concerns, not proof that every deployment is fully isolated or certified. The case study distinguishes implemented mechanisms from outstanding integration work.</p>
+<p><a href="../enterprise-ai-platform/">Full AtomMind case study</a></p>
 
 
 
