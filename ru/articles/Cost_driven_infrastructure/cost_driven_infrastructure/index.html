@@ -1,0 +1,1728 @@
+
+<!doctype html>
+<html lang="ru" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI and Solution Architect — Enterprise Platforms, ML Engineering and Technical Leadership">
+      
+      
+        <meta name="author" content="Igor Stureiko">
+      
+      
+        <link rel="canonical" href="https://stureiko.github.io/ru/articles/Cost_driven_infrastructure/cost_driven_infrastructure/">
+      
+      
+        <link rel="prev" href="../../From_model_to_system/ml_system_design/">
+      
+      
+        <link rel="next" href="../../../resume/">
+      
+      
+        
+          <link rel="alternate" href="../../../../articles/Cost_driven_infrastructure/cost_driven_infrastructure/" hreflang="en">
+        
+          <link rel="alternate" href="./" hreflang="ru">
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Инфраструктура, управляемая стоимостью - Igor Stureiko</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          Перейти к содержанию
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Верхний колонтитул">
+    <a href="../../../" title="Igor Stureiko" class="md-header__button md-logo" aria-label="Igor Stureiko" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Igor Stureiko
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Инфраструктура, управляемая стоимостью
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Выберите язык">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="../../../../articles/Cost_driven_infrastructure/cost_driven_infrastructure/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Поиск" placeholder="Поиск" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Поиск">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистить" aria-label="Очистить" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Инициализация поиска
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Главная
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Обо мне
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../experience/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Опыт
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../projects/" class="md-tabs__link">
+          
+  
+  
+  Проекты
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../architecture/" class="md-tabs__link">
+          
+  
+  
+  Архитектура
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../teaching/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Преподавание
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  Статьи
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../resume/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Резюме
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../contact/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Контакты
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навигация" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../" title="Igor Stureiko" class="md-nav__button md-logo" aria-label="Igor Stureiko" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Igor Stureiko
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Главная
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Обо мне
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../experience/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Опыт
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Проекты
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Проекты
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Обзор
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/enterprise-ai-platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AtomMind Industrial AI Platform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/saina-revenue-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Saina Airline Revenue Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/ai-assistants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Industrial AI Assistants
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/reinforcement-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/ocr-platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OCR Platform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Архитектура
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Архитектура
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Обзор
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/zero-trust-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero Trust AI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../teaching/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Преподавание
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Статьи
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Статьи
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Обзор
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Tree_questions/three_questions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Три главных вопроса
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../From_model_to_system/ml_system_design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    От ноутбука к промышленной ML-системе
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Инфраструктура, управляемая стоимостью
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Инфраструктура, управляемая стоимостью
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Содержание">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Содержание
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Введение
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Почему GPU простаивают
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gpu_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Три способа платить за GPU
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#infracost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Стоимость как код: Infracost
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Модель «база плюс пики»
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ежемесячное планирование
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ограничения и риски
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Заключение
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Источники
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../resume/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Резюме
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Контакты
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Содержание">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Содержание
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Введение
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Почему GPU простаивают
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gpu_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Три способа платить за GPU
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#infracost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Стоимость как код: Infracost
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Модель «база плюс пики»
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ежемесячное планирование
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ограничения и риски
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Заключение
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Источники
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Навигация" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../../../" class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Главная
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Статьи
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">Инфраструктура, управляемая стоимостью<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p><em>Почему аренда GPU часто оказывается избыточной и как спроектировать модель оплаты в Infracost</em></p>
+<h2 id="_2">Введение<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>Типичная задача выглядит так - команда ML-платформы получает бюджет и, чтобы не зависеть от доступности мощностей, арендует GPU-кластер на год. Решение кажется разумным: цена за час ниже, чем у on-demand, очередей нет, инженеры спокойны, стоимость спрогнозирована и включена в бюджет. Через полгода кто-то из аудита видит, что кластер занят примерно треть времени, остальное время узлы стоят включёнными, ничего не обучают и при этом ровно так же стоят денег. Счёт приходит за все часы месяца, а полезная работа выполнена лишь в части из них.</p>
+<p>Важно, что никто в этой истории не ошибся в техническом смысле. Кластер настроен корректно, задания запускаются, модели обучаются. Ошибка архитектурная: стоимость инфраструктуры считалась как фиксированная строка бюджета, а не как функция реального профиля нагрузки. Мы привыкли проектировать надёжность через SLA, резервирование и отказоустойчивость, безопасность через модель угроз и контроль доступа. Стоимость же слишком часто остаётся побочным эффектом, который обнаруживается постфактум.</p>
+<p>Я предлагаю относиться к стоимости как к проектируемому свойству системы. Тезис простой: нагрузка на GPU при обучении моделей принципиально неравномерна, поэтому постоянная аренда мощностей с длинными обязательствами в большинстве случаев неоправданно дорога. Разумнее планировать не далее чем на месяц вперёд, выделять минимально необходимую базу под обязательство, а пики докупать по запросу. Решение при этом принимается не интуитивно, а по расчёту, причём расчёт делается на инфраструктуре, описанной как код. Инфраструктура управляется через контролируемые изменения и мы всегда имеем базу для расчёта стоимости и контроля изменений стоимости в ретроспективе. Одним из самых популярных инструментов такого контроля выступает Infracost.</p>
+<p>Такой подход я называю инфраструктурой, управляемой стоимостью (cost-driven infrastructure) и процесс пересмотра стоимости и её прогноза должен стать таким же регулярным процессом проекта как оценка техдолга или контроля дрейфа показателей.</p>
+<h2 id="gpu">Почему GPU простаивают<a class="headerlink" href="#gpu" title="Permanent link">&para;</a></h2>
+<p>Разработка модели не похожа на работу веб-сервиса, у которого есть более-менее сглаженный поток запросов. Это цикл «данные - эксперимент - оценка - отладка», и в каждой фазе потребность в вычислительных мощностях разная. Подготовка и очистка данных идёт в основном на CPU и требует в первую очередь объемов хранилища. Запуск эксперимента требует GPU, но только на время самого прогона. Затем наступает оценка результатов, разбор ошибок, правка кода, и всё это время дорогие ускорители ничего не делают. Перед релизом потребность резко вырастает: нужно запустить сразу несколько вариантов, перепроверить метрики, повторить обучение с исправленными данными. После релиза снова наступает затишье.</p>
+<p>Эта картина подтверждается не только практикой, но и публичными исследованиями. Команда Shanghai AI Lab проанализировала трассы кластеров Acme, в которых работают 4 704 GPU A100, и описала их в работе, опубликованной на NSDI 2024 [1]. Медианная утилизация GPU в задачах разработки LLM там оказалась очень высокой, около 99%, но распределение нагрузки бимодально: ускорители либо почти полностью заняты, либо почти простаивают, как это бывает при оценке моделей и отладке. Там же отмечено, что сетевые адаптеры простаивают более 60% времени. Иначе говоря, «средняя загрузка» плохо описывает такую систему, потому что у неё нет типичного состояния. Есть два крайних режима, и между ними система переключается.</p>
+<p>Второе наблюдение касается размера заданий. Авторы работы SAKURAONE, описавшие динамику нагрузки в однотенантной среде разработки LLM, показывают, что крупные задания загружают GPU хорошо, а мелкие, на один-два узла, имеют медианную утилизацию всего 17–23% [2]. Они же приводят цифру, которая заставляет задуматься: отменённые задания составляют 73,5% всего занятого GPU-времени. Это не значит, что отмена всегда ошибка. Для исследователя быстро остановить неудачный эксперимент как раз правильно. Но платит за это инфраструктура, и платит по тарифу, рассчитанному на полезную работу.</p>
+<p>Третий пример показывает, что даже занятый GPU не всегда занят полезным делом. По публикации Backblaze на данных Adobe, при первом профилировании около двух третей GPU-времени уходило на ожидание данных [3]. После оптимизации входного пайплайна утилизация поднялась примерно до 80%, что близко к практическому потолку. Это отдельная тема, которая решается инженерно, внутри пайплайна, а не закупкой мощностей, но она напоминает, что утилизацию нужно измерять до того, как принимать решение о покупке мощностей.</p>
+<p>Из этого следует важное практическое различие между двумя режимами. Большие pretraining-прогоны занимают много узлов подолгу и без пауз, их утилизация высока, и для них длинные обязательства могут быть оправданы. Мелкие экспериментальные задания, напротив, короткие, нерегулярные и часто отменяются, их утилизация низка. Платить за эти два режима одинаково нельзя. Если мы покупаем под экспериментальную нагрузку круглосуточные мощности, мы платим тариф «для непрерывной работы» за работу, которая непрерывной не бывает.</p>
+<h2 id="gpu_1">Три способа платить за GPU<a class="headerlink" href="#gpu_1" title="Permanent link">&para;</a></h2>
+<p>Чтобы рассуждать о смешанной модели, нужно ясно представлять, какие способы оплаты у нас есть. Я буду опираться на AWS как на самый документированный случай, но у других провайдеров устроено похоже, только названия отличаются.</p>
+<p><strong>On-demand.</strong> Почасовая оплата без обязательств. Это самый дорогой тариф за час, зато самый гибкий: узел запускается, когда нужен, и перестаёт стоить денег после остановки. Главное ограничение не в цене, а в доступности. Гарантии, что нужное количество топовых GPU найдётся в нужный момент в нужном регионе, обычный on-demand не даёт.</p>
+<p><strong>Краткосрочное резервирование.</strong> В AWS это Capacity Blocks for ML. Блок можно забронировать на срок от одного до 14 дней или на срок, кратный семи дням, вплоть до 182 дней, причём бронировать можно за срок до восьми недель вперёд [4]. Оплата вносится при бронировании, отменить блок нельзя, в одном блоке доступно до 64 инстансов. Поддерживаются семейства P4d, P4de, P5, P5e, P5en и P6. Цена зависит от спроса, публикуется за accelerator-hour и обычно лежит между on-demand и годовым резервированием [5]. Главное достоинство блока в том, что он даёт гарантию доступности на конкретное окно, то есть решает именно ту проблему, которую on-demand не решает. У многих других провайдеров есть аналог в виде помесячных committed-планов.</p>
+<p><strong>Долгосрочные обязательства.</strong> Reserved Instances и Savings Plans на один или три года. Провайдер даёт скидку в обмен на то, что вы платите за мощность независимо от того, используете её или нет. Для p4d.24xlarge в us-east-1 при годовом резервировании без предоплаты ориентир по ценовым агрегаторам составляет около 13,92 $ в час, то есть порядка 37% скидки к on-demand [6].</p>
+<div class="admonition note">
+<p class="admonition-title">Сверяйте цены с официальным прайсом</p>
+<p>Цены резервирования в этой статье взяты из агрегаторов и относятся к 2026 году. Это ориентир для иллюстрации метода, а не данные для бюджета. Перед планированием закупки сверьте цифры с актуальным официальным прайс-листом провайдера и проверьте условия конкретного плана.</p>
+</div>
+<p>Сведём три способа в одну таблицу.</p>
+<table>
+<thead>
+<tr>
+<th>Показатель</th>
+<th>On-demand</th>
+<th>Краткосрочное резервирование</th>
+<th>Долгосрочное обязательство (1–3 года)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Цена за час</td>
+<td>Максимальная</td>
+<td>Между on-demand и годовым резервом</td>
+<td>Минимальная</td>
+</tr>
+<tr>
+<td>Гибкость</td>
+<td>Полная</td>
+<td>Ограничена окном бронирования</td>
+<td>Низкая</td>
+</tr>
+<tr>
+<td>Гарантия доступности</td>
+<td>Нет</td>
+<td>Есть на период блока</td>
+<td>Зависит от типа резервирования</td>
+</tr>
+<tr>
+<td>Горизонт планирования</td>
+<td>Не нужен</td>
+<td>Дни и недели, до 8 недель вперёд</td>
+<td>Годы</td>
+</tr>
+<tr>
+<td>Риск недоиспользования</td>
+<td>Практически нет</td>
+<td>Платите за весь блок, отмена невозможна</td>
+<td>Платите за всё время вне зависимости от загрузки</td>
+</tr>
+</tbody>
+</table>
+<p>Из таблицы видно, что дёшево и гибко одновременно не бывает, и это две стороны одной и той же медали. Поэтому вопрос формулируется не «какой тариф выбрать», а «какую часть нагрузки на какой тариф отнести». Ответить на него можно только расчётом, и для расчёта нужен удобный инструмент.</p>
+<h2 id="infracost">Стоимость как код: Infracost<a class="headerlink" href="#infracost" title="Permanent link">&para;</a></h2>
+<p>Если инфраструктура описана в Terraform, то её стоимость можно посчитать до применения. Именно эту задачу решает Infracost [7]. Он читает код конфигурации, находит ресурсы, запрашивает цены у провайдера и выдаёт помесячную оценку с разбивкой по ресурсам. Это превращает вопрос «сколько это будет стоить» из предположения в проверяемое число, которое можно получить на этапе ревью, а не в конце месяца.</p>
+<p>Вот минимальный пример: один узел с восемью GPU A100.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_instance&quot;</span><span class="w"> </span><span class="nv">&quot;train_node&quot;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="na">ami</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="nv">var.dlami_id</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="na">instance_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;p4d.24xlarge&quot;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nb">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="na">team</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;nlp-research&quot;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="na">project</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ranker-v3&quot;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="na">env</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;training&quot;</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">}</span>
+</code></pre></div>
+<p>Для такой конфигурации Infracost возвращает оценку on-demand: 21,96 $ в час, то есть 16 029 $ в месяц при 730 часах. Хранилище, сеть и прочие ресурсы считаются отдельными строками. Для ориентира приведу цены нескольких GPU-инстансов, полученные тем же способом (AWS, us-east-1, Linux, 730 часов в месяце).</p>
+<table>
+<thead>
+<tr>
+<th>Инстанс</th>
+<th>GPU</th>
+<th>$/час</th>
+<th>$/месяц</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p5.48xlarge</td>
+<td>8× H100</td>
+<td>55,04</td>
+<td>40 179</td>
+</tr>
+<tr>
+<td>p4d.24xlarge</td>
+<td>8× A100 40 GB</td>
+<td>21,96</td>
+<td>16 029</td>
+</tr>
+<tr>
+<td>g5.12xlarge</td>
+<td>4× A10G</td>
+<td>5,67</td>
+<td>4 141</td>
+</tr>
+<tr>
+<td>g6.12xlarge</td>
+<td>4× L4</td>
+<td>4,60</td>
+<td>3 359</td>
+</tr>
+<tr>
+<td>g5.xlarge</td>
+<td>1× A10G</td>
+<td>1,01</td>
+<td>734</td>
+</tr>
+</tbody>
+</table>
+<p>Запуск в CI сводится к одной команде.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>infracost<span class="w"> </span>scan
+</code></pre></div>
+<p>Практическая ценность не в самой цифре, а в том, где она появляется. Если запускать сканирование в CI, то в каждом pull request будет видна дельта стоимости: изменение, добавляющее ещё два узла p4d, покажет рост счёта прямо в обсуждении кода, пока его ещё можно отклонить. Поверх этого Infracost поддерживает бюджеты и политики, которые могут остановить изменение, если оно выходит за допустимые рамки. А теги позволяют разносить затраты по командам и проектам, что понадобится нам в конце месяца для сравнения плана и факта.</p>
+<p>Текущая версия Infracost считает on-demand тарифы. Цены резервирования и Capacity Blocks берутся из прайс-листов провайдера, а не из оценки инструмента. В старых версиях резервирование можно было задавать через usage-файл [8], но полагаться на это для смешанной схемы я бы не стал. Поэтому расчёт «база плюс пики» делается поверх оценки Infracost: часовая on-demand цена берётся из инструмента, цена обязательства из прайса провайдера, а сама арифметика выполняется в простой таблице или небольшом скрипте. Это не недостаток подхода, а разделение ответственности: Infracost отвечает за то, что он знает хорошо, то есть за описание ресурсов и актуальные тарифы, а решение о структуре обязательств остаётся за человеком.</p>
+<h2 id="_3">Модель «база плюс пики»<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>Ядро этого метода умещается в одну формулу. Для каждого узла нужно выяснить, выгоднее ли держать его по обязательству или брать по запросу. Обязательство стоит фиксированно за весь месяц, on-demand стоит пропорционально часам использования. Значит, существует порог загрузки, ниже которого обязательство проигрывает. Назовём его точкой безубыточности утилизации:</p>
+<p><code>u* = цена_обязательства / цена_on-demand</code></p>
+<p>Здесь обе цены берутся за час. Если узел нужен больше чем u<em> времени в месяце, его выгоднее взять по обязательству. Если меньше, выгоднее брать по запросу и платить только за реально использованные часы. Для p4d.24xlarge получаем 13,92 / 21,96 ≈ 63%. Порог определяется ценами, а не размерами нашей команды: чем больше скидка за обязательство, тем ниже u</em>, и тем раньше резервирование начинает окупаться. При скидке 37% нужно загружать узел почти две трети времени, чтобы не переплатить.</p>
+<p>Рассмотрим сквозной пример. Допустим, команде нужен один узел p4d.24xlarge постоянно: регулярное дообучение и сервинг экспериментальных моделей занимают 730 часов в месяц. Второй узел нужен примерно 200 часов в месяц под крупные еженедельные прогоны. Ещё два узла нужны по 100 часов в месяц каждый под пиковые эксперименты перед релизом. Фактическая потребность составляет 730 + 200 + 100 + 100 = 1 130 узло-часов в месяц, пиковая одновременная потребность равна четырём узлам. Рассмотрим четыре способа это сделать.</p>
+<table>
+<thead>
+<tr>
+<th>Сценарий</th>
+<th>Состав</th>
+<th>Стоимость в месяц</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A. «Арендуем с запасом»</td>
+<td>4 узла on-demand 24/7: 4 × 16 029</td>
+<td>64 116 $</td>
+</tr>
+<tr>
+<td>B. «Резервируем всё»</td>
+<td>4 узла по годовому обязательству: 4 × 10 162</td>
+<td>40 648 $</td>
+</tr>
+<tr>
+<td>C. «Всё по запросу, только когда нужно»</td>
+<td>1 130 ч × 21,96</td>
+<td>24 812 $</td>
+</tr>
+<tr>
+<td>D. «База плюс пики»</td>
+<td>1 узел по обязательству (10 162 $) + 400 часов on-demand (400 × 21,96 = 8 783 $)</td>
+<td>18 945 $</td>
+</tr>
+</tbody>
+</table>
+<p>Часовая ставка в таблицах округлена до цента, суммы посчитаны по точной ставке Infracost. Сценарий A самый простой организационно и самый дорогой. Сценарий B снижает цену часа, но утилизация там составляет 1 130 / 2 920 = 39%, что заметно ниже порога u*: мы платим за три узла, которые большую часть месяца стоят без дела. Сценарий C выглядит выгодным, но требует жёсткой дисциплины выключения и несёт риск, что в момент пика нужных узлов в on-demand не окажется.</p>
+<p>Сценарий D даёт оценку стоимости всего 18 945 $ и оказывается дешевле B на 53% и дешевле A на 70%. Но самое интересное сравнение с C: смешанная схема дешевле даже «идеального» on-demand примерно на 5 900 $ в месяц. Причина в том, что базовый узел загружен на 100% и с запасом проходит порог u* ≈ 63%, поэтому для него обязательство выгоднее почасовой оплаты. Второй узел загружен на 200 / 730 ≈ 27%, это ниже порога, и резервировать его невыгодно. Значит, правильное решение здесь такое: один узел в базу, остальные по запросу. Это не общее правило «резервируй треть», а результат расчёта на конкретном профиле нагрузки и конкретных ценах. Если цены изменятся или профиль сдвинется, ответ может стать другим, и именно поэтому расчёт стоит повторять регулярно.</p>
+<h2 id="_4">Ежемесячное планирование<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>Модель работает только тогда, когда её исходные данные обновляются. Поэтому я рекомендую использовать ежемесячный цикл, в котором участвуют три роли: архитектор, который отвечает за структуру решения и расчёт, FinOps или финансовый директор, который отвечает за бюджет и условия обязательств, и лиды ML-команд, которые знают свои планы на нагрузку оборудования. Принципы FinOps, то есть совместная ответственность инженерии, финансов и бизнеса за облачные расходы, хорошо описаны в FinOps Framework [9], и этот подход по сути является его применением к GPU-нагрузке.</p>
+<p>Цикл состоит из пяти шагов.</p>
+<p><strong>Первый</strong>: каждая команда присылает календарь обучений на месяц, то есть какие прогоны планируются, сколько узлов нужно и на сколько часов. Не нужна точность до часа, достаточно честной оценки и признания, что часть запусков может не состояться.</p>
+<p><strong>Второй</strong>: архитектор готовит два-три варианта Terraform, например «только база» и «база плюс пики», и прогоняет их через Infracost для оценки стоимости.</p>
+<p><strong>Третий</strong>: по результатам расчёта принимается решение об обязательствах, то есть сколько узлов вынести в базу и менять ли существующие обязательства.</p>
+<p><strong>Четвёртый</strong>: пики бронируются заранее. Если крупные прогоны известны за недели, имеет смысл заказать Capacity Blocks или запросить квоты, не дожидаясь момента, когда нужные узлы понадобятся срочно.</p>
+<p><strong>Пятый</strong>: в конце месяца план сравнивается с фактом по тегам, и расхождения становятся входными данными для следующего цикла.</p>
+<p>Чтобы «пики по запросу» не превращались в ручную работу, нужен механизм, который делает этот режим автоматическим. На практике это очередь заданий с автоскейлингом: Kubernetes с Karpenter, который поднимает узлы под поставленные в очередь поды и гасит их, когда работа закончена, или Slurm с эластичным пулом. Тогда инженеру не нужно помнить о выключении, а базовая конфигурация просто всегда используется первой, и только избыток спускается на конфигурацию по запросу. Без такой автоматизации сценарий C, который мы разбирали выше, остаётся теоретическим: стоимость экономится только в том случае, если лишние узлы действительно гаснут.</p>
+<p>Роли здесь важнее, чем инструменты. Если архитектор считает, но не имеет полномочий влиять на закупки, расчёт остаётся справкой. Если FinOps покупает обязательства без профиля нагрузки, получается сценарий B. Если лиды команд не присылают планы, база определяется по прошлому месяцу, и мы всегда на шаг позади. Регулярный цикл нужен именно для того, чтобы эти три стороны регулярно синхронизировали свои планы и решения.</p>
+<h2 id="_5">Ограничения и риски<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>У подхода есть границы, и о них стоит помнить.</p>
+<p><strong>Первое</strong>: доступность GPU on-demand не гарантирована, особенно для топовых ускорителей. Сценарий, в котором пики полностью зависят от того, найдутся ли свободные узлы в момент запроса, несёт реальный риск срыва сроков. Поэтому важные пики лучше закрывать краткосрочными резервированиями, а on-demand оставлять для менее критичной части нагрузки.</p>
+<p><strong>Второе</strong>: цены меняются. В 2026 году AWS повышал цены Capacity Blocks: в январе примерно на 15%, а затем ещё несколько раз в течение года [5]. Значит, порог u* не константа, и расчёт, сделанный полгода назад, может давать неверный ответ. Цифры в этой статье тоже стоит рассматривать как иллюстрацию на конкретный момент времени и обязательно перепроверять перед запуском проекта.</p>
+<p><strong>Третье</strong>: GPU не единственная статья расходов. Хранилище датасетов и чекпойнтов, сетевой трафик, egress при переносе данных между регионами или наружу тоже стоят денег, и в отдельных проектах они сопоставимы с вычислениями. Оптимизация одной статьи при игнорировании остальных даёт обманчивую экономию, поэтому в расчёт нужно включать всю инфраструктуру, а не только GPU.</p>
+<p><strong>Четвёртое</strong>: длинные непрерывные pretraining-прогоны остаются случаем, где годовое обязательство действительно выигрывает. Если кластер занят одной большой задачей неделями без пауз, его утилизация близка к 100%, она заведомо выше u*, и скидка за обязательство работает в полную силу. Смешанная модель не отрицает долгосрочных обязательств, она лишь требует, чтобы они применялись к той части нагрузки, которая этого заслуживает.</p>
+<p><strong>Пятое</strong>, и, пожалуй, самое важное: организационный риск. Если никто не владеет этим решением, то есть нет человека, который раз в месяц пересчитывает базу, всё довольно быстро возвращается к привычному «арендуем с запасом». Это самый безопасный выбор для каждого отдельного участника и самый дорогой для компании в целом. Чтобы этого не происходило, у решения должен быть владелец с понятной ответственностью и регулярный цикл актуализации.</p>
+<h2 id="_6">Заключение<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p>Мы начали с кластера, который арендован на год и загружен на треть. Его проблема не в железе и не в провайдере, а в том, что нагрузка и стоимость не была спроектирована. GPU-нагрузка при разработке моделей бимодальна, мелкие задания утилизируют ускорители плохо, и платить за такую нагрузку тарифом «для непрерывной работы» обычно означает переплачивать.</p>
+<p>Альтернатива состоит в смешанной модели. Минимальная база, которая загружена выше порога u*, закрывается обязательством, а всё остальное берётся по запросу или краткосрочными резервированиями, забронированными заранее. На примере из четырёх узлов такая схема обошлась в 18 945 $ в месяц против 64 116 $ при аренде с запасом. Этот результат не универсален, но представленный метод позволяет сравнивать утилизацию узла с порогом и принимать решение по расчёту, а не по ощущению.</p>
+<p>Infracost делает этот подход практичным, потому что приносит стоимость в процесс разработки инфраструктуры. Когда оценка видна в pull request, а бюджеты и политики защищают от случайных решений, стоимость становится таким же проверяемым свойством системы, как надёжность или безопасность. Она видна до того, как превращается в счёт, и в этом основная идея инфраструктуры, управляемой стоимостью.</p>
+<h2 id="_7">Источники<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Hu, Q. et al. <em>Characterization of Large Language Model Development in the Datacenter</em>. NSDI 2024. <a href="https://arxiv.org/abs/2403.07648">https://arxiv.org/abs/2403.07648</a></li>
+<li><em>SAKURAONE: An Open Ethernet-Based AI HPC System and Its Observed Workload Dynamics in a Single-Tenant LLM Development Environment</em>. arXiv:2604.13600, 2026. <a href="https://arxiv.org/abs/2604.13600">https://arxiv.org/abs/2604.13600</a></li>
+<li>Gigazine. <em>Why are GPUs unnecessarily idle during AI training, and what measures has Adobe taken to address this?</em> (по материалам Backblaze), 2026. <a href="https://gigazine.net/gsc_news/en/20260826-gpu-idle/">https://gigazine.net/gsc_news/en/20260826-gpu-idle/</a></li>
+<li>AWS. <em>Amazon EC2 Capacity Blocks for ML — User Guide</em>. <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-blocks.html">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-blocks.html</a></li>
+<li>AWS. <em>Capacity Blocks pricing</em>. <a href="https://aws.amazon.com/ec2/capacityblocks/pricing/">https://aws.amazon.com/ec2/capacityblocks/pricing/</a></li>
+<li>Vantage. <em>EC2 instance pricing comparison (p4d.24xlarge)</em>. <a href="https://instances.vantage.sh/aws/ec2/p4d.24xlarge">https://instances.vantage.sh/aws/ec2/p4d.24xlarge</a></li>
+<li>Infracost. <em>Documentation</em>. <a href="https://www.infracost.io/docs/">https://www.infracost.io/docs/</a></li>
+<li>Infracost. <em>Usage-based resources (EC2 reserved instance usage parameters)</em>. <a href="https://www.infracost.io/docs/features/usage_based_resources/">https://www.infracost.io/docs/features/usage_based_resources/</a></li>
+<li>FinOps Foundation. <em>FinOps Framework</em>. <a href="https://www.finops.org/framework/">https://www.finops.org/framework/</a></li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  К началу
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.path", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u041a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u0442\u044c \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0415\u0449\u0451 1 \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.more.other": "\u0415\u0449\u0451 # \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.none": "\u0421\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0435", "search.result.other": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439: #", "search.result.placeholder": "\u041d\u0430\u0447\u043d\u0438\u0442\u0435 \u043f\u0435\u0447\u0430\u0442\u0430\u0442\u044c \u0434\u043b\u044f \u043f\u043e\u0438\u0441\u043a\u0430", "search.result.term.missing": "\u041e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442", "select.version": "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0432\u0435\u0440\u0441\u0438\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

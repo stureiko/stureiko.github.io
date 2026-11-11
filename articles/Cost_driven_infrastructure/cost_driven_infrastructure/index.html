@@ -1,0 +1,1728 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="AI and Solution Architect — Enterprise Platforms, ML Engineering and Technical Leadership">
+      
+      
+        <meta name="author" content="Igor Stureiko">
+      
+      
+        <link rel="canonical" href="https://stureiko.github.io/articles/Cost_driven_infrastructure/cost_driven_infrastructure/">
+      
+      
+        <link rel="prev" href="../../From_model_to_system/ml_system_design/">
+      
+      
+        <link rel="next" href="../../../resume/">
+      
+      
+        
+          <link rel="alternate" href="./" hreflang="en">
+        
+          <link rel="alternate" href="../../../ru/articles/Cost_driven_infrastructure/cost_driven_infrastructure/" hreflang="ru">
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Cost-Driven Infrastructure - Igor Stureiko</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cost-driven-infrastructure" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Igor Stureiko" class="md-header__button md-logo" aria-label="Igor Stureiko" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Igor Stureiko
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Cost-Driven Infrastructure
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Select language">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="./" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="../../../ru/articles/Cost_driven_infrastructure/cost_driven_infrastructure/" hreflang="ru" class="md-select__link">
+              Русский
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../about/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../experience/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Experience
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../projects/" class="md-tabs__link">
+          
+  
+  
+  Projects
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../architecture/" class="md-tabs__link">
+          
+  
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../teaching/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Teaching
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../" class="md-tabs__link">
+          
+  
+  
+  Articles
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../resume/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Resume
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../contact/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Contact
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Igor Stureiko" class="md-nav__button md-logo" aria-label="Igor Stureiko" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Igor Stureiko
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../experience/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Projects
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/enterprise-ai-platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AtomMind Industrial AI Platform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/saina-revenue-management/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Saina Airline Revenue Management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/ai-assistants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Industrial AI Assistants
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/reinforcement-learning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reinforcement Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../projects/ocr-platform/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OCR Platform
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../architecture/zero-trust-ai/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Zero Trust AI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../teaching/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Teaching
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Articles
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Articles
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Tree_questions/three_questions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    The Three Fundamental Questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../From_model_to_system/ml_system_design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    From Notebook to Production ML
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cost-Driven Infrastructure
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cost-Driven Infrastructure
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-gpus-sit-idle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why GPUs Sit Idle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#three-ways-to-pay-for-gpus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three Ways to Pay for GPUs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-as-code-infracost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost as Code: Infracost
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-baseline-plus-peaks-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The "Baseline Plus Peaks" Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monthly-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monthly Planning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations-and-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations and Risks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../resume/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Resume
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contact/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Contact
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Introduction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-gpus-sit-idle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why GPUs Sit Idle
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#three-ways-to-pay-for-gpus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three Ways to Pay for GPUs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cost-as-code-infracost" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost as Code: Infracost
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-baseline-plus-peaks-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The "Baseline Plus Peaks" Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#monthly-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monthly Planning
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#limitations-and-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Limitations and Risks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        References
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="Navigation" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    Home
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    Articles
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="cost-driven-infrastructure">Cost-Driven Infrastructure<a class="headerlink" href="#cost-driven-infrastructure" title="Permanent link">&para;</a></h1>
+<p><em>Why renting GPUs often turns out to be excessive, and how to design a payment model with Infracost</em></p>
+<h2 id="introduction">Introduction<a class="headerlink" href="#introduction" title="Permanent link">&para;</a></h2>
+<p>A typical task looks like this: an ML platform team gets a budget and, to avoid depending on capacity availability, rents a GPU cluster for a year. The decision seems reasonable: the hourly price is lower than on-demand, there are no queues, the engineers are calm, and the cost has been forecast and included in the budget. Six months later someone from audit sees that the cluster is busy about a third of the time, and the rest of the time the nodes sit powered on, train nothing, and cost exactly the same. The bill covers every hour of the month, while useful work was done in only some of them.</p>
+<p>Nobody in this story made a technical mistake. The cluster is configured correctly, jobs run, models train. The mistake is architectural: infrastructure cost was treated as a fixed line in the budget, not as a function of the real workload profile. We are used to designing reliability through SLAs, redundancy and fault tolerance, and security through threat models and access control. Cost, too often, remains a side effect that is discovered after the fact.</p>
+<p>I suggest treating cost as a designed property of the system. The thesis is simple: GPU load during model training is fundamentally uneven, so renting capacity permanently under long commitments is, in most cases, needlessly expensive. It is better to plan no further than a month ahead, commit only to the minimum necessary baseline, and buy peaks on demand. The decision is made by calculation, not by intuition, and the calculation runs on infrastructure described as code. Infrastructure is managed through controlled changes, so we always have a baseline for calculating cost and for controlling cost changes retrospectively. Infracost is one of the most popular tools for this kind of control.</p>
+<p>I call this approach cost-driven infrastructure, and the process of revising cost and its forecast should become as regular a project process as tech-debt assessment or metric-drift control.</p>
+<h2 id="why-gpus-sit-idle">Why GPUs Sit Idle<a class="headerlink" href="#why-gpus-sit-idle" title="Permanent link">&para;</a></h2>
+<p>Model development is not like running a web service with a more or less smooth stream of requests. It is a "data - experiment - evaluation - debugging" cycle, and each phase needs compute capacity to a different degree. Data preparation and cleaning run mostly on CPU and require first of all storage volume. An experiment needs a GPU, but only for the duration of the run itself. Then comes evaluating results, analyzing errors and fixing code, and for all that time the expensive accelerators do nothing. Before a release, demand jumps: several variants must run at once, metrics must be rechecked, training must be repeated on corrected data. After the release, things go quiet again.</p>
+<p>This picture is supported not only by practice but also by public research. A team at Shanghai AI Lab analyzed traces from the Acme clusters, which run 4,704 A100 GPUs, and described them in a paper published at NSDI 2024 [1]. Median GPU utilization in LLM development jobs was very high, about 99%, but the load distribution is bimodal: accelerators are either almost fully busy or almost idle, as happens during model evaluation and debugging. The same paper notes that network adapters are idle more than 60% of the time. In other words, "average load" describes such a system poorly, because it has no typical state. There are two extreme modes, and the system switches between them.</p>
+<p>The second observation concerns job size. The authors of SAKURAONE, who describe workload dynamics in a single-tenant LLM development environment, show that large jobs use GPUs well, while small jobs on one or two nodes have a median utilization of only 17–23% [2]. They also give a figure that should make us stop and think: canceled jobs account for 73.5% of all occupied GPU time. This does not mean cancellation is always a mistake. For a researcher, stopping a failed experiment quickly is exactly the right thing to do. But the infrastructure pays for it, and pays at a rate calculated for useful work.</p>
+<p>A third example shows that even a busy GPU is not always doing useful work. According to a Backblaze publication based on Adobe's data, at first profiling about two thirds of GPU time went to waiting for data [3]. After the input pipeline was optimized, utilization rose to about 80%, which is close to the practical ceiling. That is a separate topic, solved by engineering inside the pipeline rather than by purchasing capacity, but it is a reminder to measure utilization before deciding to buy capacity.</p>
+<p>This leads to a practical distinction between two modes. Large pretraining runs occupy many nodes for long periods without pauses, their utilization is high, and long commitments can be justified for them. Small experimental jobs, by contrast, are short, irregular and often canceled, and their utilization is low. These two modes cannot be paid for in the same way. If we buy round-the-clock capacity for experimental work, we pay the "continuous operation" rate for work that is never continuous.</p>
+<h2 id="three-ways-to-pay-for-gpus">Three Ways to Pay for GPUs<a class="headerlink" href="#three-ways-to-pay-for-gpus" title="Permanent link">&para;</a></h2>
+<p>To reason about a mixed model, we need a clear view of the payment options. I will use AWS as the best-documented case. Other providers work similarly, with different names.</p>
+<p><strong>On-demand.</strong> Hourly payment with no commitment. This is the most expensive rate per hour, but also the most flexible: a node starts when needed and stops costing money once it is stopped. The main limitation is not price but availability. Plain on-demand gives no guarantee that the required number of top-tier GPUs will be found at the right moment in the right region.</p>
+<p><strong>Short-term reservation.</strong> In AWS this is Capacity Blocks for ML. A block can be booked for one to 14 days, or for a period in multiples of seven days up to 182 days, and booking is possible up to eight weeks in advance [4]. Payment is made at booking time, a block cannot be canceled, and up to 64 instances are available in one block. The P4d, P4de, P5, P5e, P5en and P6 families are supported. The price depends on demand, is published per accelerator-hour, and usually sits between on-demand and a one-year reservation [5]. The main advantage of a block is that it guarantees availability for a specific window, which is exactly the problem on-demand does not solve. Many other providers have an analogue in the form of monthly committed plans.</p>
+<p><strong>Long-term commitments.</strong> Reserved Instances and Savings Plans for one or three years. The provider gives a discount in exchange for your paying for the capacity whether you use it or not. For p4d.24xlarge in us-east-1 with a one-year reservation and no upfront payment, price aggregators give a reference of about $13.92 per hour, which is roughly a 37% discount to on-demand [6].</p>
+<div class="admonition note">
+<p class="admonition-title">Check prices against the official price list</p>
+<p>The reservation prices in this article come from aggregators and refer to 2026. They are a reference for illustrating the method, not data for a budget. Before planning a purchase, check the figures against the provider's current official price list and verify the terms of the specific plan.</p>
+</div>
+<p>Here are the three options in one table.</p>
+<table>
+<thead>
+<tr>
+<th>Criterion</th>
+<th>On-demand</th>
+<th>Short-term reservation</th>
+<th>Long-term commitment (1–3 years)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Price per hour</td>
+<td>Highest</td>
+<td>Between on-demand and a one-year reservation</td>
+<td>Lowest</td>
+</tr>
+<tr>
+<td>Flexibility</td>
+<td>Full</td>
+<td>Limited to the booking window</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>Availability guarantee</td>
+<td>None</td>
+<td>Yes, for the block period</td>
+<td>Depends on the reservation type</td>
+</tr>
+<tr>
+<td>Planning horizon</td>
+<td>Not needed</td>
+<td>Days and weeks, up to 8 weeks ahead</td>
+<td>Years</td>
+</tr>
+<tr>
+<td>Underuse risk</td>
+<td>Practically none</td>
+<td>You pay for the whole block, no cancellation</td>
+<td>You pay for the whole term regardless of load</td>
+</tr>
+</tbody>
+</table>
+<p>The table shows that cheap and flexible never come together, and they are two sides of the same coin. So the question is not "which rate" but "which part of the load to which rate". It can only be answered by calculation, and calculation needs a convenient tool.</p>
+<h2 id="cost-as-code-infracost">Cost as Code: Infracost<a class="headerlink" href="#cost-as-code-infracost" title="Permanent link">&para;</a></h2>
+<p>If infrastructure is described in Terraform, its cost can be calculated before it is applied. This is the task Infracost solves [7]. It reads the configuration code, finds resources, requests prices from the provider and produces a monthly estimate broken down by resource. This turns "how much will it cost" from a guess into a verifiable number that you can get at review time, not at the end of the month.</p>
+<p>Here is a minimal example: one node with eight A100 GPUs.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kr">resource</span><span class="w"> </span><span class="nc">&quot;aws_instance&quot;</span><span class="w"> </span><span class="nv">&quot;train_node&quot;</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="na">ami</span><span class="w">           </span><span class="o">=</span><span class="w"> </span><span class="nv">var.dlami_id</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="na">instance_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;p4d.24xlarge&quot;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="nb">tags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="na">team</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;nlp-research&quot;</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="na">project</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;ranker-v3&quot;</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="na">env</span><span class="w">     </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;training&quot;</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="p">}</span>
+</code></pre></div>
+<p>For this configuration, Infracost returns an on-demand estimate of $21.96 per hour, or $16,029 per month at 730 hours. Storage, network and other resources are counted as separate lines. For reference, here are the prices of several GPU instances obtained the same way (AWS, us-east-1, Linux, 730 hours per month).</p>
+<table>
+<thead>
+<tr>
+<th>Instance</th>
+<th>GPU</th>
+<th>$/hour</th>
+<th>$/month</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>p5.48xlarge</td>
+<td>8× H100</td>
+<td>55.04</td>
+<td>40,179</td>
+</tr>
+<tr>
+<td>p4d.24xlarge</td>
+<td>8× A100 40 GB</td>
+<td>21.96</td>
+<td>16,029</td>
+</tr>
+<tr>
+<td>g5.12xlarge</td>
+<td>4× A10G</td>
+<td>5.67</td>
+<td>4,141</td>
+</tr>
+<tr>
+<td>g6.12xlarge</td>
+<td>4× L4</td>
+<td>4.60</td>
+<td>3,359</td>
+</tr>
+<tr>
+<td>g5.xlarge</td>
+<td>1× A10G</td>
+<td>1.01</td>
+<td>734</td>
+</tr>
+</tbody>
+</table>
+<p>Running it in CI comes down to one command.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>infracost<span class="w"> </span>scan
+</code></pre></div>
+<p>The practical value is not in the number itself but in where it appears. If you run the scan in CI, every pull request shows the cost delta: a change that adds two more p4d nodes will show the bill growth right in the code discussion, while it can still be rejected. On top of this, Infracost supports budgets and policies that can block a change if it goes beyond acceptable limits. Tags let you split costs by team and project, which we will need at the end of the month to compare plan and actual.</p>
+<p>The current version of Infracost calculates on-demand rates. Reservation and Capacity Blocks prices come from the provider's price lists, not from the tool's estimate. Older versions let you specify reservations through a usage file [8], but I would not rely on that for a mixed scheme. So the "baseline plus peaks" calculation is done on top of the Infracost estimate: the hourly on-demand price comes from the tool, the commitment price from the provider's price list, and the arithmetic itself is done in a simple spreadsheet or a small script. This is not a flaw in the approach but a division of responsibility: Infracost handles what it knows well, namely resource descriptions and current rates, and the decision on commitment structure stays with a person.</p>
+<h2 id="the-baseline-plus-peaks-model">The "Baseline Plus Peaks" Model<a class="headerlink" href="#the-baseline-plus-peaks-model" title="Permanent link">&para;</a></h2>
+<p>The core of this method fits in one formula. For each node, we need to find out whether it is cheaper to hold it under a commitment or to take it on demand. A commitment costs a fixed amount for the whole month, while on-demand costs in proportion to hours used. So there is a utilization threshold below which the commitment loses. Call it the break-even utilization:</p>
+<p><code>u* = commitment_price / on-demand_price</code></p>
+<p>Both prices are per hour. If a node is needed for more than u<em> of the month, it is cheaper to take it under a commitment. If less, it is cheaper to take it on demand and pay only for the hours actually used. For p4d.24xlarge we get 13.92 / 21.96 ≈ 63%. The threshold is set by prices, not by the size of our team: the bigger the commitment discount, the lower u</em>, and the sooner a reservation starts to pay off. With a 37% discount, a node must be loaded almost two thirds of the time to avoid overpaying.</p>
+<p>Consider an end-to-end example. Suppose a team needs one p4d.24xlarge node all the time: regular fine-tuning and serving of experimental models take 730 hours a month. A second node is needed about 200 hours a month for large weekly runs. Two more nodes are needed 100 hours a month each for peak experiments before a release. The actual demand is 730 + 200 + 100 + 100 = 1,130 node-hours per month, and peak simultaneous demand is four nodes. Consider four ways to do it.</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Composition</th>
+<th>Cost per month</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A. "Rent with headroom"</td>
+<td>4 nodes on-demand 24/7: 4 × 16,029</td>
+<td>$64,116</td>
+</tr>
+<tr>
+<td>B. "Reserve everything"</td>
+<td>4 nodes on a one-year commitment: 4 × 10,162</td>
+<td>$40,648</td>
+</tr>
+<tr>
+<td>C. "On-demand only when needed"</td>
+<td>1,130 h × 21.96</td>
+<td>$24,812</td>
+</tr>
+<tr>
+<td>D. "Baseline plus peaks"</td>
+<td>1 node on commitment ($10,162) + 400 hours on-demand (400 × 21.96 = $8,783)</td>
+<td>$18,945</td>
+</tr>
+</tbody>
+</table>
+<p>The hourly rate in the tables is rounded to the cent; the totals are calculated from the exact Infracost rate. Scenario A is the simplest organizationally and the most expensive. Scenario B lowers the price of an hour, but its utilization is 1,130 / 2,920 = 39%, well below the threshold u*: we pay for three nodes that sit idle for most of the month. Scenario C looks attractive, but it demands strict shutdown discipline and carries the risk that no on-demand nodes will be available at the moment of a peak.</p>
+<p>Scenario D gives a total cost estimate of $18,945 and is 53% cheaper than B and 70% cheaper than A. But the most interesting comparison is with C: the mixed scheme is cheaper even than "ideal" on-demand, by about $5,900 a month. The reason is that the baseline node is 100% loaded and clears the threshold u* ≈ 63% with room to spare, so for it a commitment beats hourly payment. The second node is loaded 200 / 730 ≈ 27%, which is below the threshold, so reserving it does not pay. The right decision here is therefore one node in the baseline and the rest on demand. This is not a general rule of "reserve a third". It is the result of a calculation on a specific load profile and specific prices. If prices change or the profile shifts, the answer may change, which is why the calculation should be repeated regularly.</p>
+<h2 id="monthly-planning">Monthly Planning<a class="headerlink" href="#monthly-planning" title="Permanent link">&para;</a></h2>
+<p>The model only works when its inputs are kept current. So I recommend using a monthly cycle with three roles: the architect, who owns the structure of the solution and the calculation; FinOps or the finance director, who owns the budget and commitment terms; and the ML team leads, who know their planned hardware load. The principles of FinOps, that is, shared responsibility of engineering, finance and the business for cloud spend, are well described in the FinOps Framework [9], and this approach is essentially its application to GPU workloads.</p>
+<p>The cycle consists of five steps.</p>
+<p><strong>First</strong>: each team sends its training calendar for the month: which runs are planned, how many nodes are needed and for how many hours. Precision to the hour is not needed; an honest estimate is enough, along with the acknowledgment that some runs may not happen.</p>
+<p><strong>Second</strong>: the architect prepares two or three Terraform variants, for example "baseline only" and "baseline plus peaks", and runs them through Infracost to estimate cost.</p>
+<p><strong>Third</strong>: based on the results, a decision is made on commitments: how many nodes to move into the baseline and whether to change existing commitments.</p>
+<p><strong>Fourth</strong>: peaks are booked in advance. If large runs are known weeks ahead, it makes sense to order Capacity Blocks or request quotas, rather than waiting until the nodes are needed urgently.</p>
+<p><strong>Fifth</strong>: at the end of the month the plan is compared with actuals by tags, and the discrepancies become input for the next cycle.</p>
+<p>So that "peaks on demand" does not turn into manual work, you need a mechanism that makes this mode automatic. In practice this is a job queue with autoscaling: Kubernetes with Karpenter, which brings up nodes for queued pods and shuts them down when the work is done, or Slurm with an elastic pool. Then engineers do not need to remember to shut things down, and the baseline configuration is simply always used first, and only the overflow goes to the on-demand configuration. Without such automation, scenario C from the example above stays theoretical: money is saved only if the extra nodes really do shut down.</p>
+<p>Roles matter more here than tools. If the architect calculates but has no authority over purchasing, the calculation remains a reference note. If FinOps buys commitments without a load profile, the result is scenario B. If team leads do not send their plans, the baseline is set from last month, and we are always one step behind. A regular cycle is needed precisely so that these three parties regularly synchronize their plans and decisions.</p>
+<h2 id="limitations-and-risks">Limitations and Risks<a class="headerlink" href="#limitations-and-risks" title="Permanent link">&para;</a></h2>
+<p>The approach has limits, and they are worth keeping in mind.</p>
+<p><strong>First</strong>: on-demand GPU availability is not guaranteed, especially for top-tier accelerators. A scenario in which peaks depend entirely on whether free nodes can be found at the moment of the request carries a real risk of missed deadlines. So important peaks are better covered by short-term reservations, leaving on-demand for the less critical part of the load.</p>
+<p><strong>Second</strong>: prices change. In 2026 AWS raised Capacity Blocks prices: by about 15% in January, and then several more times during the year [5]. So the threshold u* is not a constant, and a calculation made six months ago may give the wrong answer. The figures in this article should also be seen as an illustration for a specific moment in time and must be re-checked before a project starts.</p>
+<p><strong>Third</strong>: GPUs are not the only cost item. Storage for datasets and checkpoints, network traffic, and egress when moving data between regions or outside also cost money, and in some projects they are comparable to compute. Optimizing one item while ignoring the others gives deceptive savings, so the calculation should include all the infrastructure, not just the GPUs.</p>
+<p><strong>Fourth</strong>: long continuous pretraining runs remain a case where a one-year commitment really does win. If a cluster is occupied by one large job for weeks without pauses, its utilization is close to 100%, clearly above u*, and the commitment discount works in full. The mixed model does not reject long-term commitments. It only requires that they be applied to the part of the load that deserves them.</p>
+<p><strong>Fifth</strong>, and perhaps the most important: organizational risk. If nobody owns this decision, meaning there is no person who recalculates the baseline once a month, things fairly quickly return to the familiar "rent with headroom". It is the safest choice for each individual participant and the most expensive for the company as a whole. To prevent this, the decision needs an owner with clear responsibility and a regular update cycle.</p>
+<h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
+<p>We started with a cluster rented for a year and loaded to a third. Its problem is not the hardware or the provider but that load and cost were not designed. GPU load in model development is bimodal, small jobs use accelerators poorly, and paying the "continuous operation" rate for such a load usually means overpaying.</p>
+<p>The alternative is a mixed model. The minimum baseline, loaded above the threshold u*, is covered by a commitment, and everything else is taken on demand or through short-term reservations booked in advance. In the four-node example, this scheme cost $18,945 a month against $64,116 for renting with headroom. This result is not universal, but the method presented lets you compare a node's utilization with the threshold and decide by calculation, not by feel.</p>
+<p>Infracost makes this approach practical because it brings cost into the infrastructure development process. When the estimate is visible in the pull request, and budgets and policies guard against accidental decisions, cost becomes as verifiable a property of the system as reliability or security. It is visible before it turns into a bill, and that is the main idea of cost-driven infrastructure.</p>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Hu, Q. et al. <em>Characterization of Large Language Model Development in the Datacenter</em>. NSDI 2024. <a href="https://arxiv.org/abs/2403.07648">https://arxiv.org/abs/2403.07648</a></li>
+<li><em>SAKURAONE: An Open Ethernet-Based AI HPC System and Its Observed Workload Dynamics in a Single-Tenant LLM Development Environment</em>. arXiv:2604.13600, 2026. <a href="https://arxiv.org/abs/2604.13600">https://arxiv.org/abs/2604.13600</a></li>
+<li>Gigazine. <em>Why are GPUs unnecessarily idle during AI training, and what measures has Adobe taken to address this?</em> (based on a Backblaze publication), 2026. <a href="https://gigazine.net/gsc_news/en/20260826-gpu-idle/">https://gigazine.net/gsc_news/en/20260826-gpu-idle/</a></li>
+<li>AWS. <em>Amazon EC2 Capacity Blocks for ML — User Guide</em>. <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-blocks.html">https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-blocks.html</a></li>
+<li>AWS. <em>Capacity Blocks pricing</em>. <a href="https://aws.amazon.com/ec2/capacityblocks/pricing/">https://aws.amazon.com/ec2/capacityblocks/pricing/</a></li>
+<li>Vantage. <em>EC2 instance pricing comparison (p4d.24xlarge)</em>. <a href="https://instances.vantage.sh/aws/ec2/p4d.24xlarge">https://instances.vantage.sh/aws/ec2/p4d.24xlarge</a></li>
+<li>Infracost. <em>Documentation</em>. <a href="https://www.infracost.io/docs/">https://www.infracost.io/docs/</a></li>
+<li>Infracost. <em>Usage-based resources (EC2 reserved instance usage parameters)</em>. <a href="https://www.infracost.io/docs/features/usage_based_resources/">https://www.infracost.io/docs/features/usage_based_resources/</a></li>
+<li>FinOps Foundation. <em>FinOps Framework</em>. <a href="https://www.finops.org/framework/">https://www.finops.org/framework/</a></li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.sections", "navigation.path", "navigation.top", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
