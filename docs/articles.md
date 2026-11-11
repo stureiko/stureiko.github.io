@@ -14,6 +14,12 @@
 
     ML System Design · MLOps · AI Platforms
 
+-   :material-cash-multiple:{ .lg .middle } **[Cost-Driven Infrastructure](articles/Cost_driven_infrastructure/cost_driven_infrastructure.md)**
+
+    Why renting GPUs around the clock is usually an overpayment, and how to size a committed baseline plus on-demand peaks with Infracost.
+
+    FinOps · GPU Infrastructure · Infrastructure as Code
+
 </div>
 
 
